@@ -586,7 +586,7 @@ const Merge = () => {
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold ">Card List</h2>
+              <h2 className="text-xl font-bold text-white font-semibold ">Your Cards</h2>
               <CardList cards={cards} onCardClick={handleCardClick} />
             </div>
             

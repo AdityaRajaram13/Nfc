@@ -39,7 +39,7 @@ const Header = () => {
     <img
         src={MySvg}
         alt="SVG"
-        className="absolute top-44 right-56 transform -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-60 right-56 transform -translate-x-1/2 -translate-y-1/2"
       />
     </div>
   );
