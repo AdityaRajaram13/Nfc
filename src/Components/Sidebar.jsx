@@ -114,9 +114,7 @@ const Sidebar = () => {
   const handleGridFillClick = () => {
     setShowDashboard(true);
   };
-
-import React from 'react';
-
+  
 const Sidebar = () => {
   return (
     <aside className="fixed top-0 left-0 h-screen w-16 flex flex-col space-y-10 items-center justify-center text-white" style={{ backgroundColor: "#111536" }}>
