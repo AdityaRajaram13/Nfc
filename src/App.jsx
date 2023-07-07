@@ -1,61 +1,3 @@
-// import React from 'react';
-// import Merge from './Components/Merge';
-
-// const App = () => {
-//   return (
-//     <div>
-//       <Merge />
-      
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
-
-
-
-// import React, {useState} from 'react';
-// import Sidebar from './Components/Sidebar';
-// import Navbar from './Components/Navbar';
-// import Dashboard from './Components/Dashboard';
-// import UserProfile from './Components/UserProfile';
-
-// const App = () => {
-//   const [userProfile, setUserProfile] = useState({
-//     name: '',
-//     jobTitle: '',
-//     company: '',
-//     contactDetails: '',
-//   });
-  
-//   const handleEditProfile = (updatedProfile) => {
-//     setUserProfile(updatedProfile);
-//   };
-  
-//   return (
-//       <div className="h-screen w-full bg-white relative flex overflow-hidden">
-//         <Sidebar />
-//         <div className="w-full h-full flex flex-col justify-between">
-//           <Navbar />
-//         <div>
-//         <UserProfile profile={userProfile} onEdit={handleEditProfile} />        
-//         </div>
-//         </div>
-//       </div>
-    
-    
-//   );
-// };
-
-// export default App;
-
-
-
-
-
-
 import React, {useState} from 'react';
 import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
@@ -77,15 +19,6 @@ const App = () => {
   
   return (
     <>
-     {/* <div clasName="">
-  <div className="absolute z-10">
-    <UserProfile profile={userProfile} onEdit={handleEditProfile} />
-  </div>
-  <div className="">
-    <Dashboard />
-  </div>
-</div> */}
-
     <CardProfile />
       </>
     

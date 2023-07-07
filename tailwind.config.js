@@ -6,6 +6,15 @@ export default {
 ],
 theme: {
   extend: {
+
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1080 px',
+      'xl': '1440px',
+      '2xl': '1441px',
+    },
+
     fontFamily:{
       Quicksand:['Quicksand', 'sans-serif'],
       Montserrat:['Montserrat', 'sans-serif'],
