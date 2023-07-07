@@ -2425,319 +2425,540 @@
 
 
 
-import React, { useState, useRef } from 'react';
-import Defaultuserimage from '../assets/Images/Userdefault.png'
-import TemplateComponent from './TemplateComponent';
+// import React, { useState, useRef } from 'react';
+// import Defaultuserimage from '../assets/Images/Userdefault.png'
+// import TemplateComponent from './TemplateComponent';
+
+// const FormComponent = () => {
+//   const [formState, setFormState] = useState({
+//     displayName: '',
+//     designation: '',
+//     email: '',
+//     website: '',
+//     companyName: '',
+//     phoneNumber: '',
+//     address: '',
+//     userImage: '',
+//     customFields: []
+//   });
+
+//   const fileInputRef = useRef(null);
+
+//   const handleImageClick = () => {
+//     fileInputRef.current.click();
+//   };
+
+//   const handleImageChange = (e) => {
+//     const file = e.target.files[0];
+//     const reader = new FileReader();
+
+//     reader.onload = () => {
+//       setFormState(prevState => ({
+//         ...prevState,
+//         userImage: reader.result
+//       }));
+//     };
+
+//     if (file) {
+//       reader.readAsDataURL(file);
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     // Extract the type and text data from the customFields array
+//     const customFieldData = formState.customFields.map(({ type, text }) => ({ type, text }));
+
+//     const formData = {
+//       ...formState,
+//       customFields: customFieldData
+//     };
+
+//     try {
+//       const response = await fetch('http://localhost:3000/api/submit-form', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(formData),
+//       });
+
+//       if (response.ok) {
+//         console.log('Data submitted successfully');
+//         // Reset the form fields
+//         setFormState({
+//           displayName: '',
+//           designation: '',
+//           email: '',
+//           website: '',
+//           companyName: '',
+//           phoneNumber: '',
+//           address: '',
+//           userImage: '',
+//           customFields: []
+//         });
+//       } else {
+//         console.error('Error submitting data');
+//       }
+//     } catch (error) {
+//       console.error('Error submitting data:', error);
+//     }
+//   };
+
+//   const handleAddNew = () => {
+//     setFormState(prevState => ({
+//       ...prevState,
+//       customFields: [...prevState.customFields, { status: false, type: 'mobile', text: '' }]
+//     }));
+//   };
+
+//   const handleDelete = (index) => {
+//     setFormState(prevState => {
+//       const updatedCustomFields = [...prevState.customFields];
+//       updatedCustomFields.splice(index, 1);
+//       return {
+//         ...prevState,
+//         customFields: updatedCustomFields
+//       };
+//     });
+//   };
+
+//   const handleStatusChange = (index) => {
+//     setFormState(prevState => {
+//       const updatedCustomFields = [...prevState.customFields];
+//       updatedCustomFields[index].status = !updatedCustomFields[index].status;
+//       return {
+//         ...prevState,
+//         customFields: updatedCustomFields
+//       };
+//     });
+//   };
+
+//   const handleTypeChange = (index, e) => {
+//     setFormState(prevState => {
+//       const updatedCustomFields = [...prevState.customFields];
+//       updatedCustomFields[index].type = e.target.value;
+//       return {
+//         ...prevState,
+//         customFields: updatedCustomFields
+//       };
+//     });
+//   };
+
+//   const handleTextChange = (index, e) => {
+//     setFormState(prevState => {
+//       const updatedCustomFields = [...prevState.customFields];
+//       updatedCustomFields[index].text = e.target.value;
+//       return {
+//         ...prevState,
+//         customFields: updatedCustomFields
+//       };
+//     });
+//   };
+
+//   return (
+//     <div className="">
+//       <div className="flex flex-col mt-10 mr-4 items-center justify-center">
+//         <div className="mb-6">
+//           <h2 className="text-2xl text-center font-semibold">Create your Card</h2>
+//         </div>
+
+//         <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+//           <div className="flex items-center justify-center">
+//             <label htmlFor="userImage" className="cursor-pointer">
+//               <img
+//                 src={formState.userImage || Defaultuserimage}
+//                 alt="User"
+//                 className="w-32 h-32 rounded-full object-cover"
+//                 onClick={handleImageClick}
+//               />
+//               <input
+//                 type="file"
+//                 id="userImage"
+//                 accept="image/*"
+//                 className="hidden"
+//                 ref={fileInputRef}
+//                 onChange={handleImageChange}
+//               />
+//             </label>
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="displayName" className="block font-medium text-gray-700">
+//               Name
+//             </label>
+//             <input
+//               type="text"
+//               id="displayName"
+//               name="displayName"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.displayName}
+//               onChange={(e) => setFormState({ ...formState, displayName: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="designation" className="block font-medium text-gray-700">
+//               Designation
+//             </label>
+//             <input
+//               type="text"
+//               id="designation"
+//               name="designation"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.designation}
+//               onChange={(e) => setFormState({ ...formState, designation: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="email" className="block font-medium text-gray-700">
+//               Email
+//             </label>
+//             <input
+//               type="email"
+//               id="email"
+//               name="email"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.email}
+//               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="website" className="block font-medium text-gray-700">
+//               Website
+//             </label>
+//             <input
+//               type="url"
+//               id="website"
+//               name="website"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.website}
+//               onChange={(e) => setFormState({ ...formState, website: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="companyName" className="block font-medium text-gray-700">
+//               Company Name
+//             </label>
+//             <input
+//               type="text"
+//               id="companyName"
+//               name="companyName"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.companyName}
+//               onChange={(e) => setFormState({ ...formState, companyName: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="phoneNumber" className="block font-medium text-gray-700">
+//               Phone Number
+//             </label>
+//             <input
+//               type="tel"
+//               id="phoneNumber"
+//               name="phoneNumber"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.phoneNumber}
+//               onChange={(e) => setFormState({ ...formState, phoneNumber: e.target.value })}
+//             />
+//           </div>
+
+//           <div className="mt-6">
+//             <label htmlFor="address" className="block font-medium text-gray-700">
+//               Address
+//             </label>
+//             <textarea
+//               id="address"
+//               name="address"
+//               rows="3"
+//               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//               value={formState.address}
+//               onChange={(e) => setFormState({ ...formState, address: e.target.value })}
+//             ></textarea>
+//           </div>
+
+//           <div className="mt-6">
+//             <h3 className="text-xl font-medium text-gray-700 mb-2">Custom Fields</h3>
+//             {formState.customFields.map((customField, index) => (
+//               <div key={index} className="flex items-center">
+//                 <input
+//                   type="checkbox"
+//                   className="mr-2"
+//                   checked={customField.status}
+//                   onChange={() => handleStatusChange(index)}
+//                 />
+//                 <select
+//                   className="mr-2"
+//                   value={customField.type}
+//                   onChange={(e) => handleTypeChange(index, e)}
+//                 >
+//                   <option value="mobile">Mobile</option>
+//                   <option value="email">Email</option>
+//                   <option value="website">Website</option>
+//                   <option value="address">Address</option>
+//                 </select>
+//                 <input
+//                   type="text"
+//                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+//                   value={customField.text}
+//                   onChange={(e) => handleTextChange(index, e)}
+//                 />
+//                 <button
+//                   type="button"
+//                   className="ml-2 text-red-500"
+//                   onClick={() => handleDelete(index)}
+//                 >
+//                   Delete
+//                 </button>
+//               </div>
+//             ))}
+//             <button
+//               type="button"
+//               className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
+//               onClick={handleAddNew}
+//             >
+//               Add New Field
+//             </button>
+//           </div>
+
+//           <div className="mt-6">
+//             <button
+//               type="submit"
+//               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+//             >
+//               Submit
+//             </button>
+//           </div>
+//         </form>
+
+//         <TemplateComponent formData={formState} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FormComponent;
+
+
+
+
+
+import React, { useState } from 'react';
+import { FiTrash2 } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
+
 
 const FormComponent = () => {
-  const [formState, setFormState] = useState({
-    displayName: '',
-    designation: '',
-    email: '',
-    website: '',
-    companyName: '',
-    phoneNumber: '',
-    address: '',
-    userImage: '',
-    customFields: []
-  });
-
-  const fileInputRef = useRef(null);
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      setFormState(prevState => ({
-        ...prevState,
-        userImage: reader.result
-      }));
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Extract the type and text data from the customFields array
-    const customFieldData = formState.customFields.map(({ type, text }) => ({ type, text }));
-
-    const formData = {
-      ...formState,
-      customFields: customFieldData
-    };
-
-    try {
-      const response = await fetch('http://localhost:3000/api/submit-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('Data submitted successfully');
-        // Reset the form fields
-        setFormState({
-          displayName: '',
-          designation: '',
-          email: '',
-          website: '',
-          companyName: '',
-          phoneNumber: '',
-          address: '',
-          userImage: '',
-          customFields: []
-        });
-      } else {
-        console.error('Error submitting data');
-      }
-    } catch (error) {
-      console.error('Error submitting data:', error);
-    }
-  };
+  const [displayName, setDisplayName] = useState('');
+  const [designation, setDesignation] = useState('');
+  const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [customFields, setCustomFields] = useState([]);
 
   const handleAddNew = () => {
-    setFormState(prevState => ({
-      ...prevState,
-      customFields: [...prevState.customFields, { status: false, type: 'mobile', text: '' }]
-    }));
+    setCustomFields([...customFields, { status: false, type: 'mobile', text: '' }]);
   };
 
   const handleDelete = (index) => {
-    setFormState(prevState => {
-      const updatedCustomFields = [...prevState.customFields];
-      updatedCustomFields.splice(index, 1);
-      return {
-        ...prevState,
-        customFields: updatedCustomFields
-      };
-    });
+    const updatedCustomFields = [...customFields];
+    updatedCustomFields.splice(index, 1);
+    setCustomFields(updatedCustomFields);
   };
 
   const handleStatusChange = (index) => {
-    setFormState(prevState => {
-      const updatedCustomFields = [...prevState.customFields];
-      updatedCustomFields[index].status = !updatedCustomFields[index].status;
-      return {
-        ...prevState,
-        customFields: updatedCustomFields
-      };
-    });
+    const updatedCustomFields = [...customFields];
+    updatedCustomFields[index].status = !updatedCustomFields[index].status;
+    setCustomFields(updatedCustomFields);
   };
 
   const handleTypeChange = (index, e) => {
-    setFormState(prevState => {
-      const updatedCustomFields = [...prevState.customFields];
-      updatedCustomFields[index].type = e.target.value;
-      return {
-        ...prevState,
-        customFields: updatedCustomFields
-      };
-    });
+    const updatedCustomFields = [...customFields];
+    updatedCustomFields[index].type = e.target.value;
+    setCustomFields(updatedCustomFields);
   };
 
   const handleTextChange = (index, e) => {
-    setFormState(prevState => {
-      const updatedCustomFields = [...prevState.customFields];
-      updatedCustomFields[index].text = e.target.value;
-      return {
-        ...prevState,
-        customFields: updatedCustomFields
-      };
-    });
+    const updatedCustomFields = [...customFields];
+    updatedCustomFields[index].text = e.target.value;
+    setCustomFields(updatedCustomFields);
   };
 
   return (
-    <div className="">
-      <div className="flex flex-col mt-10 mr-4 items-center justify-center">
-        <div className="mb-6">
-          <h2 className="text-2xl text-center font-semibold">Create your Card</h2>
-        </div>
-
-        <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-          <div className="flex items-center justify-center">
-            <label htmlFor="userImage" className="cursor-pointer">
-              <img
-                src={formState.userImage || Defaultuserimage}
-                alt="User"
-                className="w-32 h-32 rounded-full object-cover"
-                onClick={handleImageClick}
-              />
-              <input
-                type="file"
-                id="userImage"
-                accept="image/*"
-                className="hidden"
-                ref={fileInputRef}
-                onChange={handleImageChange}
-              />
-            </label>
-          </div>
-
-          <div className="mt-6">
-            <label htmlFor="displayName" className="block font-medium text-gray-700">
-              Name
-            </label>
+    <div className="w-800" style={{ backgroundColor: "#111536" }}>
+      <div className="w-full max-w-2xl mx-auto">
+      <h2 className="text-lg px-4 bg-111536 text-white text-center font-semibold " style={{ backgroundColor: "#111536" }}  >My Profile</h2>
+        <hr className="my-4  border-blue-600" />
+        <div className="flex flex-wrap -mx-2">
+        
+          <div className="w-full  px-2 mb-4">
+            <label htmlFor="displayName" className="text-white">Display Name</label>
             <input
               type="text"
               id="displayName"
-              name="displayName"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.displayName}
-              onChange={(e) => setFormState({ ...formState, displayName: e.target.value })}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="designation" className="block font-medium text-gray-700">
-              Designation
-            </label>
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <label htmlFor="designation" className="text-white">Designation</label>
             <input
               type="text"
               id="designation"
-              name="designation"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.designation}
-              onChange={(e) => setFormState({ ...formState, designation: e.target.value })}
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+              className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="email" className="block font-medium text-gray-700">
-              Email
-            </label>
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <label htmlFor="email" className="text-white" >Email</label>
             <input
               type="email"
               id="email"
-              name="email"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.email}
-              onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="website" className="block font-medium text-gray-700">
-              Website
-            </label>
-            <input
-              type="url"
-              id="website"
-              name="website"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.website}
-              onChange={(e) => setFormState({ ...formState, website: e.target.value })}
-            />
-          </div>
-
-          <div className="mt-6">
-            <label htmlFor="companyName" className="block font-medium text-gray-700">
-              Company Name
-            </label>
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <label htmlFor="website" className="text-white">Website</label>
             <input
               type="text"
-              id="companyName"
-              name="companyName"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.companyName}
-              onChange={(e) => setFormState({ ...formState, companyName: e.target.value })}
+              id="website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="phoneNumber" className="block font-medium text-gray-700">
-              Phone Number
-            </label>
+         
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <label htmlFor="phoneNumber" className="text-white">Phone Number</label>
             <input
               type="tel"
               id="phoneNumber"
-              name="phoneNumber"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.phoneNumber}
-              onChange={(e) => setFormState({ ...formState, phoneNumber: e.target.value })}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="address" className="block font-medium text-gray-700">
-              Address
-            </label>
+          <div className="w-full  px-2 mb-4">
+          <label htmlFor="companyName" className="text-white">Company Name</label>
+            <input
+              type="text"
+              id="companyName"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+            />
+          </div>
+          <div className="w-full px-2 mb-4">
+            <label htmlFor="address" className="text-white">Address</label>
             <textarea
               id="address"
-              name="address"
-              rows="3"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={formState.address}
-              onChange={(e) => setFormState({ ...formState, address: e.target.value })}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             ></textarea>
           </div>
+        </div>
+        <hr className="my-4 mx-4 border-blue-600" />
+      
+        <div className="flex mt-4 justify-between mb-4">
+          <h1 className="text-lg text-white font-bold">Custom Details</h1>
+          <button
+  className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+  onClick={handleAddNew}
+>
+  <FiPlus className="w-5 h-5" />
+  
+</button>
+        </div>
+        {customFields.map((field, index) => (
+          <div key={index} className="flex items-center mb-4">
+            <div className="flex items-center">
+              {/* <span className="mr-2">Status:</span> */}
+              <label
+                htmlFor={`toggle${index}`}
+                className={`flex items-center cursor-pointer`}
+              >
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    id={`toggle${index}`}
+                    className="sr-only"
+                    checked={field.status}
+                    onChange={() => handleStatusChange(index)}
+                  />
+                  <div
+                    className={`block w-12 h-6 rounded-full ${
+                      field.status ? 'bg-green-500' : 'bg-red-500'
+                    }`}
+                  ></div>
+                  <div
+                    className={`dot absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition ${
+                      field.status ? 'translate-x-6' : 'translate-x-0'
+                    }`}
+                  ></div>
+                </div>
+                {/* <div className="ml-3 text-gray-700 font-medium">
+                  {field.status ? 'Enabled' : 'Disabled'}
+                </div> */}
+              </label>
+            </div>
+            <div className="flex items-center">
+  <span className="mx-2 text-white">Type:</span>
+  <select
+    className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+    value={field.type}
+    onChange={(e) => handleTypeChange(index, e)}
+  >
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile Number</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="email">Email</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="address">Address</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="website">Website</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="company">Company Name</option>
+  </select>
+</div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-medium text-gray-700 mb-2">Custom Fields</h3>
-            {formState.customFields.map((customField, index) => (
-              <div key={index} className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={customField.status}
-                  onChange={() => handleStatusChange(index)}
-                />
-                <select
-                  className="mr-2"
-                  value={customField.type}
-                  onChange={(e) => handleTypeChange(index, e)}
-                >
-                  <option value="mobile">Mobile</option>
-                  <option value="email">Email</option>
-                  <option value="website">Website</option>
-                  <option value="address">Address</option>
-                </select>
-                <input
-                  type="text"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  value={customField.text}
-                  onChange={(e) => handleTextChange(index, e)}
-                />
-                <button
-                  type="button"
-                  className="ml-2 text-red-500"
-                  onClick={() => handleDelete(index)}
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
-              onClick={handleAddNew}
+            <div className="flex items-center">
+              <label htmlFor={`text${index}`} className="text-white mx-2">
+                Text:
+              </label>
+              <input
+                type="text"
+                id={`text${index}`}
+                className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+                value={field.text}
+                onChange={(e) => handleTextChange(index, e)}
+              />
+              <button
+              className="px-3 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 ml-4 flex items-center"
+              onClick={() => handleDelete(index)}
             >
-              Add New Field
-            </button>
+              <FiTrash2 className="w-5 h-5" />
+              
+              </button>
+            </div>
+            
           </div>
-
-          <div className="mt-6">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-
-        <TemplateComponent formData={formState} />
+        ))}
       </div>
+      <div className="ml-16 pb-4">
+      <button
+            type="submit"
+            className="w-36 px-4 py-2 mt-4 text-white bg-gradient-to-b from-blue-600 to-violet-500 rounded-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Submit
+          </button>
+          </div>
     </div>
   );
 };
