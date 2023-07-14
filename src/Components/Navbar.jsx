@@ -73,24 +73,169 @@
 
 
 
-import React from 'react';
+// import React from 'react';
+
+// const Navbar = () => {
+//   return (
+//     <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800">
+//       {/* Informação */}
+//       <div className="flex flex-shrink-0 items-center space-x-4 text-white">
+//         {/* Texto */}
+//         <div className="flex flex-col items-end">
+//           {/* Nome */}
+//           <div className="text-md font-medium">Unknown Unknown</div>
+//           {/* Título */}
+//           <div className="text-sm font-regular">Student</div>
+//         </div>
+
+//         {/* Foto */}
+//         <div className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400"></div>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Navbar;
+
+
+
+// import React, { useState } from 'react';
+
+// const Navbar = () => {
+//   const [showDropdown, setShowDropdown] = useState(false);
+
+//   const toggleDropdown = () => {
+//     setShowDropdown(!showDropdown);
+//   };
+
+//   return (
+//     <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800">
+//       <div className="flex flex-shrink-0 items-center space-x-4 text-white">
+//         <div className="flex flex-col items-end">
+//           <div className="text-md font-medium">ACARDZZZZ</div>
+//           <div className="text-sm font-regular">FOUNDER</div>
+//         </div>
+//         <div
+//           className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400"
+//           onClick={toggleDropdown}
+//         >
+//           {showDropdown && (
+//             <div className="absolute top-full right-0 w-40 bg-white shadow rounded-md mt-2">
+//               {/* Dropdown items */}
+//               <ul className="py-2 px-4 space-y-2">
+//                 <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+//                   Log In
+//                 </li>
+//                 <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+//                   Create Profile
+//                 </li>
+//               </ul>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Navbar;
+
+
+
+
+import React, { useState } from 'react';
 
 const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const [showProductDropdown, setShowProductDropdown] = useState(false);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const toggleCurrencyDropdown = () => {
+    setShowCurrencyDropdown(!showCurrencyDropdown);
+  };
+
+  const toggleProductDropdown = () => {
+    setShowProductDropdown(!showProductDropdown);
+  };
+
   return (
     <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800">
-      {/* Informação */}
       <div className="flex flex-shrink-0 items-center space-x-4 text-white">
-        {/* Texto */}
         <div className="flex flex-col items-end">
-          {/* Nome */}
-          <div className="text-md font-medium">Unknown Unknown</div>
-          {/* Título */}
-          <div className="text-sm font-regular">Student</div>
+          <div className="text-md font-medium">ACARDZZZZ</div>
+          <div className="text-sm font-regular">FOUNDER</div>
         </div>
-
-        {/* Foto */}
-        <div className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400"></div>
+        <div className="relative">
+          <button
+            className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400"
+            onClick={toggleDropdown}
+          >
+            {showDropdown && (
+              <div className="absolute top-full right-0 w-40 bg-white shadow rounded-md mt-2">
+                {/* Dropdown items */}
+                <ul className="py-2 px-4 space-y-2">
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    Log In
+                  </li>
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    Create Profile
+                  </li>
+                </ul>
+              </div>
+            )}
+          </button>
+        </div>
+       
       </div>
+      <ul className="flex space-x-4 text-white">
+        <li className="font-medium">Home</li>
+        <li className="relative">
+          <button
+            className="font-medium"
+            onClick={toggleProductDropdown}
+          >
+            Products
+            {showProductDropdown && (
+              <div className="absolute top-full left-0 w-40 bg-white shadow rounded-md mt-2">
+                {/* Products Dropdown items */}
+                <ul className="py-2 px-4 space-y-2">
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    Product 1
+                  </li>
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    Product 2
+                  </li>
+                </ul>
+              </div>
+            )}
+          </button>
+        </li>
+        <li className="relative">
+          <button
+            className="font-medium"
+            onClick={toggleCurrencyDropdown}
+          >
+            Currency
+            {showCurrencyDropdown && (
+              <div className="absolute top-full left-0 w-40 bg-white shadow rounded-md mt-2">
+                {/* Currency Dropdown items */}
+                <ul className="py-2 px-4 space-y-2">
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    India
+                  </li>
+                  <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
+                    USD
+                  </li>
+                </ul>
+              </div>
+            )}
+          </button>
+        </li>
+      </ul>
     </header>
   );
 };

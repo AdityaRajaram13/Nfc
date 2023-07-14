@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
-import Dashboard from './Components/Dashboard';
-import UserProfile from './Components/UserProfile';
-import CardProfile from './Components/CardProfile'
+import Dashboard from './Pages/Dashboard';
+import UserProfile from './Components/Dashboards/UserProfile';
+import CardProfile from './Components/Forms/VFCForm'
+import GeneralProfileForm from './Components/Forms/GeneralProfile';
+import SignIn from './Components/LoginForm/SignIn';
+import SignUp from './Components/LoginForm/SignUp';
 
 const App = () => {
   const [userProfile, setUserProfile] = useState({
@@ -19,8 +22,10 @@ const App = () => {
   
   return (
     <>
-    <CardProfile />
-      </>
+
+<Navbar />
+      
+    </>
     
   );
 };

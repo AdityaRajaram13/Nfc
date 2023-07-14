@@ -1,5 +1,5 @@
 import React from 'react';
-import CardImage from '../assets/CardDesign/Approved.svg';
+import CardImage from '../../assets/CardDesign/Approved.svg';
 
 const CardList = ({ cards }) => {
   return (

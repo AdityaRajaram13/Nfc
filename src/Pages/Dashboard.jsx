@@ -1,13 +1,7 @@
 
 
 import React, { useState } from 'react';
-import CardList from './CardList';
-import AddCardForm from './AddCardForm';
-import CardDetails from './CardDetails';
-import EditCardForm from './EditCardForm';
-import Sidebar from './Sidebar';
-import CardDash from './CardDash';
-import Header from './Header';
+import CardList from '../Components/Dashboards/CardList';
 import MySvg from '../assets/Images/Header.svg';
 
 
