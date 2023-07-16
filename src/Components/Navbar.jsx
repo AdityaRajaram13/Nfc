@@ -144,6 +144,7 @@
 
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -179,10 +180,12 @@ const Navbar = () => {
                 {/* Dropdown items */}
                 <ul className="py-2 px-4 space-y-2">
                   <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
-                    Log In
+                    <Link to="/signin">Log In</Link>
+                    {/* Log */}
                   </li>
                   <li className="text-black font-Inter cursor-pointer hover:bg-gray-200 py-1 px-2 rounded-md">
-                    Create Profile
+                  <Link to="/signup">Create Profile</Link>
+                  {/* Create */}
                   </li>
                 </ul>
               </div>
