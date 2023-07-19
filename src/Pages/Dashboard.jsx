@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import CardList from '../Components/Dashboards/CardList';
 import MySvg from '../assets/Images/Header.svg';
@@ -62,9 +60,9 @@ const Dashboard = () => {
 
     return (
         
-        <div className="p-4  h-screen w-screen" style={{ backgroundColor: "#111536" }}>
+        <div className="p-4 " style={{ backgroundColor: "#0D0F23" }}>
         <div className="mt-20 ml-20 relative">
-          <div className="mt-32  rounded-3xl bg-gradient-to-t from-cyan-950 to-indigo-950 p-4 relative overflow-hidden">
+          <div className="mt-32 w-[800px] lg:w-[850px] xl:w-[1050px] rounded-3xl bg-gradient-to-t from-cyan-950 to-indigo-950 p-4 relative overflow-hidden">
             <p className="text-2xl font-bold text-white mt-2">
               Check out our premier plan to avail <br /> exclusive card templates.
             </p>

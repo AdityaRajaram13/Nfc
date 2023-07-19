@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
-import Navbar from './Components/Navbar';
-
-
+import Route from './Routes/Route'
 const App = () => {
   return (
-<Navbar />
-
-    
+<Route />  
   );
 };
 
