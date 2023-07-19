@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './Pages/Dashboard';
 import UserProfile from './Components/Dashboards/UserProfile';
 import CardProfile from './Components/Forms/VFCForm'
@@ -24,6 +25,10 @@ const App = () => {
     <>
 
 <Navbar />
+      <Routes>
+        <Route path='signin' element={<SignIn />}/>
+        <Route path='signup' element={<SignUp />}/>
+      </Routes>
       
     </>
     
