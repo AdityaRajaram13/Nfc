@@ -15,7 +15,7 @@ const Layout = () => {
           </div>
           <div className="flex-grow flex flex-col overflow-hidden">
             <div className="flex-shrink-0">
-              <div className="absolute top-16 right-0">
+              <div className="absolute top-16 right-0 z-50">
                 <UserProfile />
               </div>
             </div>
