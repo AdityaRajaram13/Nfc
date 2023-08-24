@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
+import {createProfile} from '../../Services/ProfileService' 
+import { useNavigate } from 'react-router-dom';
+
 
 
 const AddNewCardForm = () => {
@@ -12,9 +15,15 @@ const AddNewCardForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [customFields, setCustomFields] = useState([]);
+  const [showSuccessMessage, setSuccessMessage] = useState(''); // Rename showSuccessMessage to successMessage
+  const navigate = useNavigate();
+
 
   const handleAddNew = () => {
+    console.log('Before adding new field:', customFields);
     setCustomFields([...customFields, { status: false, type: 'mobile', text: '' }]);
+    console.log('After adding new field:', customFields);
+
   };
 
   const handleDelete = (index) => {
@@ -41,14 +50,68 @@ const AddNewCardForm = () => {
     setCustomFields(updatedCustomFields);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const customFieldsData = customFields.map((field) => {
+      const { type, text } = field;
+      return {
+        fieldName: type, // Use 'type' as the 'fieldName' for now
+        value: text,
+      };
+    });
+
+    const profileData = {
+      profileName: displayName,
+      designation,
+      email,
+      website,
+      companyName,
+      mobile: phoneNumber,
+      address,
+      customFields: customFieldsData,
+    };
+
+    try {
+      // Assuming you have a createProfile function to send data to the backend
+      console.log('Profile Data:', profileData);
+      const response = await createProfile(profileData);
+      console.log('Profile created successfully:', response.profileID);
+
+      // Show success message and hide it after 3 seconds
+      setSuccessMessage('Profile Card Created Successfully');
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+
+      // Optionally, you can perform some actions after successful profile creation
+      
+      // For example, you can navigate to another page or show a success message.
+      navigate('/dashboard');
+
+    } catch (error) {
+      console.error('Error creating profile:', error);
+
+      // Handle the error, for example, show an error message to the user.
+    }
+  };
+
   return (
-    <div className="w-800" style={{ backgroundColor: "#111536" }}>
-      <div className="w-full max-w-2xl mx-auto">
-      <h2 className="text-lg pt-4 bg-111536 text-white  font-semibold " style={{ backgroundColor: "#111536" }}  >Add New Card</h2>
+    // <div className="w-800" style={{ backgroundColor: "#111536" }}>
+    // <div className="mt-10 w-screen h-screen flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
+    <div className=" h-screen relative right-40 top-8 flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
+     <div className=" w-full rounded-xl border border-2 border-blue-950 p-4 max-w-2xl mx-auto overflow-y-auto max-h-[calc(100vh-105px)] " style={{ backgroundColor: "#111536" }} >
+      <style>
+         {`
+          .overflow-y-auto::-webkit-scrollbar {
+          display: none;
+          }
+        `}
+      </style>
+      <h2 className="text-lg pt-4 bg-111536 text-white  font-semibold ">Add New Card</h2>
         <hr className="my-4  border-blue-600" />
-        <div className="flex flex-wrap -mx-2">
+        <div className="flex flex-wrap -mx-2" >
         
-          <div className="w-full  px-2 mb-4">
+          <div className="w-full  px-2 mb-4"  >
             <label htmlFor="displayName" className="text-white">Display Name</label>
             <input
               type="text"
@@ -131,7 +194,8 @@ const AddNewCardForm = () => {
   
 </button>
         </div>
-        {customFields.map((field, index) => (
+        {
+        customFields.map((field, index) => (
           <div key={index} className="flex items-center mb-4">
             <div className="flex items-center">
               {/* <span className="mr-2">Status:</span> */}
@@ -158,9 +222,6 @@ const AddNewCardForm = () => {
                     }`}
                   ></div>
                 </div>
-                {/* <div className="ml-3 text-gray-700 font-medium">
-                  {field.status ? 'Enabled' : 'Disabled'}
-                </div> */}
               </label>
             </div>
             <div className="flex items-center">
@@ -200,21 +261,28 @@ const AddNewCardForm = () => {
             
           </div>
         ))}
-      </div>
-      <div className="flex justify-center py-10">
+        <div className=" flex justify-center py-4">
       <button
             type="submit"
             className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
-            >
-            Save Changes
+            onClick={handleSubmit}
+           >
+            Create Card
           </button>
           <button
             type="submit"
             className="text-blue-600 ml-6 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
             >
-            Discard Changes
+           Clear Form
           </button>
           </div>
+          {showSuccessMessage && (
+          <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg transition-opacity duration-500">
+            Profile Card Created Successfully!
+          </div>
+        )}
+      </div>
+      
     </div>
   );
 };

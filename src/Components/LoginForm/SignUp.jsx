@@ -1,70 +1,120 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { registerUser } from '../../Services/userregistration';
+
+// ... (import statements)
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    username: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    try {
+      setError(''); // Clear any previous error message
+      const response = await registerUser(formData);
+
+      // Handle successful registration, e.g., show success message, redirect to login page, etc.
+      console.log('Registration successful:', response);
+    } catch (error) {
+      setError(error.message); // Set the error message received from the backend
+      console.error('Error during registration:', error.message);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-md shadow" style={{ backgroundColor: "#111536" }}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundColor: "#0D0F23" }}>
+      <div className="w-full max-w-md p-6 bg-white rounded-md shadow border border-2 border-blue-950" style={{ backgroundColor: "#111536" }}>
         <h1 className="text-3xl font-Inter text-white font-semibold text-center">Create Account</h1>
-        <form className="mt-6">
+        <form className="mt-6" onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-2">
             <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="fullname" className="text-white">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="fullname"
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                />
-              </div>
-              <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="fullname" className="text-white">
-                  User Name
-                </label>
-                <input
-                  type="text"
-                  id="fullname"
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                />
-              </div>
-              <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="fullname" className="text-white">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  id="fullname"
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                />
-              </div>
-              <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="fullname" className="text-white">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  id="fullname"
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                />
-              </div>
-            <div className="w-full  px-2 mb-4">
-              <label htmlFor="displayName" className="text-white font-Inter">Password</label>
+              <label htmlFor="name" className="text-white">Your Name</label>
               <input
                 type="text"
-                id="displayName"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+              />
+            </div>
+            <div className="w-full md:w-1/2 px-2 mb-4">
+              <label htmlFor="username" className="text-white">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+              />
+            </div>
+            <div className="w-full md:w-1/2 px-2 mb-4">
+              <label htmlFor="email" className="text-white">Email</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+              />
+            </div>
+            <div className="w-full md:w-1/2 px-2 mb-4">
+              <label htmlFor="phone" className="text-white">Phone Number</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+              />
+            </div>
+            {/* ... (other input fields) ... */}
+            <div className="w-full px-2 mb-4">
+              <label htmlFor="password" className="text-white font-Inter">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
               />
             </div>
             <div className="w-full px-2 mb-4">
-              <label htmlFor="designation" className="text-white font-Inter">Confirm Password</label>
+              <label htmlFor="confirmPassword" className="text-white font-Inter">Confirm Password</label>
               <input
-                type="text"
-                id="designation"
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
               />
             </div>
-            
           </div>
+          {error && <p className="text-red-500 text-center mt-2">{error}</p>}
           <div className=" mt-4 flex justify-center">
             <button
               type="submit"
@@ -73,10 +123,6 @@ const SignUp = () => {
               Create
             </button>
           </div>
-          {/* <hr className="my-8   border-blue-600" />
-          <p className="mt-4 font-Inter text-white text-center">
-            New User? <a href="/create-profile" className="text-blue-300 hover:text-blue-500">Create Profile</a>
-          </p> */}
         </form>
       </div>
     </div>

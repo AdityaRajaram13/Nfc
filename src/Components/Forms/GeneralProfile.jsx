@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const GeneralProfileForm = () => {
+const GeneralProfileForm = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('generalProfile');
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
@@ -43,37 +44,48 @@ const GeneralProfileForm = () => {
   };
 
   return (
-    <div className="w-800 mx-auto" style={{ backgroundColor: "#111536" }}>
+    // <div className="w-700 rounded-xl relative top-8 mx-auto " style={{ backgroundColor: "#111536" }}>
+    <div className="w-700 rounded-xl relative top-8  pb-4 " style={{ backgroundColor: "#111536" }}>
+
       <div className="w-full max-w-2xl mx-auto">
         {/* <h2 className="text-lg px-4 bg-111536 text-white text-center font-semibold">General Profile</h2> */}
-        <div className="w-full px-4 py-4">
+        <div className="w-full px-4 ">
+          
         <div className="flex mb-4">
+          
   <button
-    className={`p-4 border-b-2 border-transparent rounded-t-lg text-white hover:text-gray-600 hover:border-blue-500 dark:hover:text-gray-300 ${activeTab === 'generalProfile' ? 'text-white border-white' : ''}`}
+    className={`p-4 border-b-2 border-transparent font-Poppins rounded-t-lg text-white hover:text-gray-600 hover:border-blue-500 dark:hover:text-gray-300 ${activeTab === 'generalProfile' ? 'text-white border-white' : ''}`}
     onClick={() => handleTabChange('generalProfile')}
   >
     General Profile
   </button>
   <button
-    className={`p-4 border-b-2 border-transparent rounded-t-lg text-white hover:text-white hover:border-blue-500 dark:hover:text-white ${activeTab === 'PasswordChange' ? 'text-white border-white' : ''}`}
+    className={`p-4 border-b-2 border-transparent font-Poppins rounded-t-lg text-white hover:text-white hover:border-blue-500 dark:hover:text-white ${activeTab === 'PasswordChange' ? 'text-white border-white' : ''}`}
     onClick={() => handleTabChange('PasswordChange')}
   >
     Change Password
   </button>
   {/* Add more tab buttons for additional sections */}
+  <button
+          className="text-white flex relative -right-80 items-center"
+          onClick={onClose}
+        >
+          {/* Use the AiOutlineCloseCircle icon and apply red color */}
+          <AiOutlineCloseCircle size={24} className="text-red-500 mr-1" />
+        </button>
 </div>
 
 
           <form onSubmit={handleSubmit}>
             {activeTab === 'generalProfile' && (
               <div className="border rounded-xl border border-2 border-blue-950 p-4">
-                <h1 className="text-white text-2xl font-bold">Personal Info</h1>
+                <h1 className="text-white text-2xl font-Poppins font-bold">Personal Info</h1>
                 <hr className="my-4 border-blue-600" />
                 {/* Add your personal info form elements */}
                 <div className="border rounded-xl border border-2 border-blue-950 p-4">
           {/* <h1 class="text-white text-2xl font-bold">Personal Info</h1>
           <hr className="my-4  border-blue-600" /> */}
-            <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="flex flex-wrap -mx-2 ">
               <div className="w-full md:w-1/2 px-2 mb-4">
                 <label htmlFor="username" className="text-white">
                   Username
@@ -168,17 +180,17 @@ const GeneralProfileForm = () => {
             </div>
             </div>
 
-            <div className="flex justify-center py-10">
+            <div className="flex justify-center py-4">
               <button
                 type="submit"
-                className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
+                className="text-blue-600 font-Poppins hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
               >
                 Save Changes
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="text-blue-600 hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
+                className="text-blue-600 font-Poppins hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
               >
                 Discard Changes
               </button>
@@ -188,14 +200,14 @@ const GeneralProfileForm = () => {
             )}
             {activeTab === 'PasswordChange' && (
               <div className="border rounded-xl border border-2 border-blue-950 p-4">
-                <h1 className="text-white text-2xl font-bold">Change Password</h1>
+                <h1 className="text-white text-2xl font-Poppins font-bold">Change Password</h1>
                 <hr className="my-4 border-blue-600" />
                 {/* Add your Change Password form elements */}
                 <div className="flex flex-wrap -mx-2 mb-4">
                   
                   <div className="w-full  px-2 mb-4">
                     <label htmlFor="phoneNumber" className="text-white">
-                     Old Password
+                    Old Password
                     </label>
                     <input
                       type="tel"
@@ -235,14 +247,14 @@ const GeneralProfileForm = () => {
                 <div className="flex justify-center py-10">
               <button
                 type="submit"
-                className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
+                className="text-blue-600 font-Poppins hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
               >
                 Save Changes
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="text-blue-600 hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
+                className="text-blue-600 font-Poppins hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
               >
                 Discard Changes
               </button>

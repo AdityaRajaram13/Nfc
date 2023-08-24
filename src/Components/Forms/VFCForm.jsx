@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const VFCForm = ({ onClose }) => {
-  const [displayName, setDisplayName] = useState('');
-  const [designation, setDesignation] = useState('');
-  const [email, setEmail] = useState('');
+
+const VFCForm = ({ onClose, selectedProfile }) => {
+  const [displayName, setDisplayName] = useState(selectedProfile.Profilename);
+  const [designation, setDesignation] = useState(selectedProfile.Designation);
+  const [email, setEmail] = useState(selectedProfile.Email); 
   const [website, setWebsite] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,16 +43,24 @@ const VFCForm = ({ onClose }) => {
   };
 
   return (
-    <div className="w-800  rounded-xl p-4" style={{ backgroundColor: "#111536" }}>
-      <div className="w-full max-w-2xl mx-auto">
+    <div className="  rounded-xl p-4 overflow-y-auto max-h-[calc(100vh-60px)]" style={{ backgroundColor: "#111536" }}>
+      <div className="w-full max-w-2xl mx-auto ">
+      <style>
+         {`
+          .overflow-y-auto::-webkit-scrollbar {
+          display: none;
+          }
+        `}
+      </style>
        <div className="flex justify-between">
         <h2 className="text-lg  px-4 bg-111536 text-white text-center font-semibold" style={{ backgroundColor: "#111536" }}>Virtual Contact File (VFC) Information</h2>
         <button
-            className="text-red-500 ml-6 hover:bg-red-600 hover:text-white border border-red-500 hover:border-red-600 w-6 h- rounded-full transition-all duration-300"
-            onClick={onClose}
-          >
-           X
-          </button>
+          className="text-white flex relative items-center"
+          onClick={onClose}
+        >
+          {/* Use the AiOutlineCloseCircle icon and apply red color */}
+          <AiOutlineCloseCircle size={24} className="text-red-500 hover:text-red-600 mr-1" />
+        </button>
           </div>
         <hr className="my-4  border-blue-600" />
         <div className="flex flex-wrap -mx-2">
@@ -136,7 +146,7 @@ const VFCForm = ({ onClose }) => {
           </button>
         </div>
         <div
-          className="custom-fields-container overflow-y-auto max-h-12"
+          className="custom-fields-container "
           style={{ scrollbarWidth: "thin", scrollbarColor: "gray dark" }}
         >
         {customFields.map((field, index) => (

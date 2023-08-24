@@ -1,0 +1,29 @@
+[
+  {
+    "UserID": "1",
+    "Name": "John Doe",
+    "Username": "john_doe",
+    "Email": "john@example.com",
+    "Phone": "1234567890",
+    "Password": "12345678",
+    "Userimage": "user1.jpg"
+  },
+  {
+    "UserID": "2",
+    "Name": "Jane Smith",
+    "Username": "jane_smith",
+    "Email": "jane@example.com",
+    "Phone": "9876543210",
+    "Password": "12346578",
+    "Userimage": "user2.jpg"
+  },
+  {
+    "UserID": "3",
+    "Name": "Michael Johnson",
+    "Username": "michael_j",
+    "Email": "michael@example.com",
+    "Phone": "5551234567",
+    "Password": "12345678",
+    "Userimage": "user3.jpg"
+  }
+]
