@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { registerUser } from '../../Services/userregistration';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+
 
 // ... (import statements)
 
@@ -13,18 +16,71 @@ const SignUp = () => {
     confirmPassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Define showConfirmPassword state
+
+  
+
+  const isPasswordValid = (password) => {
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,16}$/;
+    return passwordRegex.test(password);
+  };
+
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  
+    if (name === 'password') {
+      if (value.length < 8) {
+        setError('Password must be at least 8 characters long.');
+      } else {
+        setError('');
+      }
+    }
+  
+    if (name === 'phone') {
+      const phoneNumber = value.replace(/\D/g, ''); // Remove non-numeric characters
+      setFormData({ ...formData, [name]: phoneNumber.slice(0, 10) }); // Limit to 10 digits
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  
+    if (name === 'email') {
+      if (!isEmailValid(value)) {
+        setError('Please enter a valid email address.');
+      } else {
+        setError('');
+      }
+    }
   };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.');
+    if (!isPasswordValid(formData.password)) {
+      setError('Password must contain 8-16 characters including an uppercase letter, a lowercase letter, a digit, and a special character.');
+      return;
+    }
+
+    if (!isEmailValid(formData.email)) {
+      setError('Please enter a valid email address, it should contain @ and . in the Email .');
       return;
     }
 
@@ -34,6 +90,7 @@ const SignUp = () => {
 
       // Handle successful registration, e.g., show success message, redirect to login page, etc.
       console.log('Registration successful:', response);
+      navigate('/signin');
     } catch (error) {
       setError(error.message); // Set the error message received from the backend
       console.error('Error during registration:', error.message);
@@ -91,28 +148,54 @@ const SignUp = () => {
               />
             </div>
             {/* ... (other input fields) ... */}
-            <div className="w-full px-2 mb-4">
-              <label htmlFor="password" className="text-white font-Inter">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-              />
-            </div>
-            <div className="w-full px-2 mb-4">
-              <label htmlFor="confirmPassword" className="text-white font-Inter">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-              />
-            </div>
+            <div className="w-full px-2 mb-4 relative">
+          <label htmlFor="password" className="text-white font-Inter">
+            Password
+          </label>
+          <input
+            type={showPassword ? 'text' : 'password'} // Toggle input type based on state
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+          />
+          <button
+            type="button"
+            className="absolute top-1/2 right-4"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? (
+              <AiOutlineEyeInvisible size={20} className="text-gray-400 hover:text-gray-600" />
+            ) : (
+              <AiOutlineEye size={20} className="text-gray-400 hover:text-gray-600" />
+            )}
+          </button>
+        </div>
+        <div className="w-full px-2 mb-4 relative">
+          <label htmlFor="confirmPassword" className="text-white font-Inter">
+            Confirm Password
+          </label>
+          <input
+            type={showConfirmPassword ? 'text' : 'password'} // Toggle input type based on state
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+          />
+          <button
+            type="button"
+            className="absolute top-1/2 right-4"
+            onClick={toggleConfirmPasswordVisibility}
+          >
+            {showConfirmPassword ? (
+              <AiOutlineEyeInvisible size={20} className="text-gray-400 hover:text-gray-600" />
+            ) : (
+              <AiOutlineEye size={20} className="text-gray-400 hover:text-gray-600" />
+            )}
+          </button>
+        </div>
           </div>
           {error && <p className="text-red-500 text-center mt-2">{error}</p>}
           <div className=" mt-4 flex justify-center">

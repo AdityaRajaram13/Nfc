@@ -21,7 +21,7 @@ const AddNewCardForm = () => {
 
   const handleAddNew = () => {
     console.log('Before adding new field:', customFields);
-    setCustomFields([...customFields, { status: false, type: 'mobile', text: '' }]);
+    setCustomFields([...customFields, { type: 'mobile', text: '' }]);
     console.log('After adding new field:', customFields);
 
   };
@@ -32,12 +32,7 @@ const AddNewCardForm = () => {
     setCustomFields(updatedCustomFields);
   };
 
-  const handleStatusChange = (index) => {
-    const updatedCustomFields = [...customFields];
-    updatedCustomFields[index].status = !updatedCustomFields[index].status;
-    setCustomFields(updatedCustomFields);
-  };
-
+  
   const handleTypeChange = (index, e) => {
     const updatedCustomFields = [...customFields];
     updatedCustomFields[index].type = e.target.value;
@@ -98,9 +93,8 @@ const AddNewCardForm = () => {
   return (
     // <div className="w-800" style={{ backgroundColor: "#111536" }}>
     // <div className="mt-10 w-screen h-screen flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
-    <div className=" h-screen relative right-40 top-8 flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
-     <div className=" w-full rounded-xl border border-2 border-blue-950 p-4 max-w-2xl mx-auto overflow-y-auto max-h-[calc(100vh-105px)] " style={{ backgroundColor: "#111536" }} >
-      <style>
+<div className=" h-screen  flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
+  <div className="relative md:right-40 top-20 md:top-8 w-full rounded-xl  border-2 border-blue-950 p-4 max-w-2xl mx-auto overflow-y-auto max-h-[calc(100vh-105px)] " style={{ backgroundColor: "#111536" }} >      <style>
          {`
           .overflow-y-auto::-webkit-scrollbar {
           display: none;
@@ -196,34 +190,7 @@ const AddNewCardForm = () => {
         </div>
         {
         customFields.map((field, index) => (
-          <div key={index} className="flex items-center mb-4">
-            <div className="flex items-center">
-              {/* <span className="mr-2">Status:</span> */}
-              <label
-                htmlFor={`toggle${index}`}
-                className={`flex items-center cursor-pointer`}
-              >
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    id={`toggle${index}`}
-                    className="sr-only"
-                    checked={field.status}
-                    onChange={() => handleStatusChange(index)}
-                  />
-                  <div
-                    className={`block w-12 h-6 rounded-full ${
-                      field.status ? 'bg-green-500' : 'bg-red-500'
-                    }`}
-                  ></div>
-                  <div
-                    className={`dot absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition ${
-                      field.status ? 'translate-x-6' : 'translate-x-0'
-                    }`}
-                  ></div>
-                </div>
-              </label>
-            </div>
+          <div key={index} className="md:flex items-center mb-4">
             <div className="flex items-center">
   <span className="mx-2 text-white">Type:</span>
   <select
@@ -239,14 +206,14 @@ const AddNewCardForm = () => {
   </select>
 </div>
 
-            <div className="flex items-center">
+            <div className="flex space-y-2 md:space-y-0 items-center">
               <label htmlFor={`text${index}`} className="text-white mx-2">
                 Text:
               </label>
               <input
                 type="text"
                 id={`text${index}`}
-                className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+                className="px-4 py-2 ml-1 bg-transparent  border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
                 value={field.text}
                 onChange={(e) => handleTextChange(index, e)}
               />

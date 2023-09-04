@@ -1,51 +1,98 @@
-import React, { useState } from 'react';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
+import { AiOutlineCloseCircle, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { updateUser, getUserData } from '../../Services/userService'; // Make sure to import the correct paths
+import { updatePassword } from '../../Services/userService'; // Import the password service
 
 const GeneralProfileForm = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('generalProfile');
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
-  const [nationality, setNationality] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
   const [oldpassword, setOldpassword] = useState('');
-  const [enternewpassword, setEnternewpassword] = useState('');
+  const [newPassword, setnewPassword] = useState('');
   const [enternewpasswordagain, setEnternewpasswordagain] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Add this line
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showEnterNewPassword, setShowEnterNewPassword] = useState(false);
+
+  useEffect(() => {
+    // Fetch user data and pre-fill form fields
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const userData = await getUserData(); // Fetch user data using the service
+      setUsername(userData.Username);
+      setFullname(userData.Name);
+      setPhoneNumber(userData.Phone);
+      setEmail(userData.Email);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // Handle error if needed
+    }
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform actions with the form data (e.g., submit to a server)
-    console.log('Form submitted:', {
-      username,
-      fullname,
-      nationality,
-      phoneNumber,
-      gender,
-      email,
-      address,
-    });
+  
+    if (activeTab === 'PasswordChange') {
+      if (newPassword !== enternewpasswordagain) {
+        console.error("New passwords don't match");
+        return;
+      }
+  
+      const shouldUpdatePassword = window.confirm("Apply changes to your password?");
+      if (shouldUpdatePassword) {
+        const passwordData = {
+          oldPassword: oldpassword,
+          newPassword,
+        };
+  
+        try {
+          const response = await updatePassword(passwordData);
+          console.log('Password updated successfully:', response.message);
+          // Optionally, you can show a success message to the user
+        } catch (error) {
+          console.error('Error updating password:', error);
+          // Optionally, you can show an error message to the user
+        }
+      }
+    } else {
+      // Handle general profile update...
+      const shouldUpdateProfile = window.confirm("Apply changes to your user information?");
+      if (shouldUpdateProfile) {
+        const updatedUserData = {
+          username,
+          fullname,
+          phoneNumber,
+          email,
+        };
+  
+        try {
+          const response = await updateUser(updatedUserData);
+          console.log('User information updated:', response.message);
+          // Optionally, you can show a success message to the user
+        } catch (error) {
+          console.error('Error updating user information:', error);
+          // Optionally, you can show an error message to the user
+        }
+      }
+    }
   };
 
-  const handleCancel = () => {
-    // Clear form inputs or perform any other necessary actions
-    setUsername('');
-    setFullname('');
-    setNationality('');
-    setPhoneNumber('');
-    setGender('');
-    setEmail('');
-    setAddress('');
-  };
+  
+  
+
 
   return (
     // <div className="w-700 rounded-xl relative top-8 mx-auto " style={{ backgroundColor: "#111536" }}>
-    <div className="w-700 rounded-xl relative top-8  pb-4 " style={{ backgroundColor: "#111536" }}>
+    <div className="max-w-700 rounded-xl relative top-8  pb-4 " style={{ backgroundColor: "#111536" }}>
 
       <div className="w-full max-w-2xl mx-auto">
         {/* <h2 className="text-lg px-4 bg-111536 text-white text-center font-semibold">General Profile</h2> */}
@@ -67,11 +114,11 @@ const GeneralProfileForm = ({ onClose }) => {
   </button>
   {/* Add more tab buttons for additional sections */}
   <button
-          className="text-white flex relative -right-80 items-center"
+          className="text-white flex relative md:left-72 items-center"
           onClick={onClose}
         >
           {/* Use the AiOutlineCloseCircle icon and apply red color */}
-          <AiOutlineCloseCircle size={24} className="text-red-500 mr-1" />
+          <AiOutlineCloseCircle size={24} className="text-red-500 hover:text-red-600 mr-1" />
         </button>
 </div>
 
@@ -110,22 +157,7 @@ const GeneralProfileForm = ({ onClose }) => {
                   className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
                 />
               </div>
-              <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="nationality" className="text-white">
-                  Nationality
-                </label>
-                <select
-                  id="nationality"
-                  value={nationality}
-                  onChange={(e) => setNationality(e.target.value)}
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                >
-                  <option style={{ backgroundColor: "#111536" }} value="">Select</option>
-                  <option style={{ backgroundColor: "#111536" }} value="USA">USA</option>
-                  <option style={{ backgroundColor: "#111536" }} value="UK">UK</option>
-                  <option style={{ backgroundColor: "#111536" }} value="Canada">Canada</option>
-                </select>
-              </div>
+
               <div className="w-full md:w-1/2 px-2 mb-4">
                 <label htmlFor="phoneNumber" className="text-white">
                   Phone Number
@@ -138,22 +170,7 @@ const GeneralProfileForm = ({ onClose }) => {
                   className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
                 />
               </div>
-              <div className="w-full md:w-1/2 px-2 mb-4">
-                <label htmlFor="gender" className="text-white">
-                  Gender
-                </label>
-                <select
-                  id="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                >
-                  <option style={{ backgroundColor: "#111536" }} value="">Select</option>
-                  <option style={{ backgroundColor: "#111536" }} value="Male">Male</option>
-                  <option style={{ backgroundColor: "#111536" }} value="Female">Female</option>
-                  <option style={{ backgroundColor: "#111536" }} value="Other">Other</option>
-                </select>
-              </div>
+              
               <div className="w-full md:w-1/2 px-2 mb-4">
                 <label htmlFor="email" className="text-white">
                   Email ID
@@ -166,17 +183,7 @@ const GeneralProfileForm = ({ onClose }) => {
                   className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
                 />
               </div>
-              <div className="w-full px-2 mb-4">
-                <label htmlFor="address" className="text-white">
-                  Address
-                </label>
-                <textarea
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                ></textarea>
-              </div>
+             
             </div>
             </div>
 
@@ -187,13 +194,7 @@ const GeneralProfileForm = ({ onClose }) => {
               >
                 Save Changes
               </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="text-blue-600 font-Poppins hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
-              >
-                Discard Changes
-              </button>
+              
             </div>
 
               </div>
@@ -205,41 +206,75 @@ const GeneralProfileForm = ({ onClose }) => {
                 {/* Add your Change Password form elements */}
                 <div className="flex flex-wrap -mx-2 mb-4">
                   
-                  <div className="w-full  px-2 mb-4">
-                    <label htmlFor="phoneNumber" className="text-white">
+                  <div className="w-full px-2 mb-4 relative">
+                  <label htmlFor="oldPassword" className="text-white">
                     Old Password
+                  </label>
+                  <input
+                    type={showOldPassword ? 'text' : 'password'}
+                    id="oldPassword"
+                    value={oldpassword}
+                    onChange={(e) => setOldpassword(e.target.value)}
+                    className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-1/2 right-4 "
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                  >
+                    {showOldPassword ? (
+                      <AiOutlineEyeInvisible size={20} className="text-gray-400 hover:text-gray-600" />
+                    ) : (
+                      <AiOutlineEye size={20} className="text-gray-400 hover:text-gray-600" />
+                    )}
+                  </button>
+                </div>
+                  <div className="w-full px-2 mb-4 relative">
+                      <label htmlFor="newPassword" className="text-white">
+                        New Password
+                      </label>
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        id="newPassword"
+                        value={newPassword}
+                        onChange={(e) => setnewPassword(e.target.value)}
+                        className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
+                      />
+                      <button
+                type="button" // Add this line to prevent form submission
+                className="absolute top-1/2 right-4"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible size={20} className="text-gray-400 hover:text-gray-600" />
+                ) : (
+                  <AiOutlineEye size={20} className="text-gray-400 hover:text-gray-600" />
+                )}
+              </button>
+
+                    </div>
+                  <div className="w-full px-2 mb-4 relative">
+                    <label htmlFor="enterNewPasswordAgain" className="text-white">
+                      Enter New Password Again
                     </label>
                     <input
-                      type="tel"
-                      id="phoneNumber"
-                      value={oldpassword}
-                      onChange={(e) => setOldpassword   (e.target.value)}
-                      className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                    />
-                  </div>
-                  <div className="w-full  px-2 mb-4">
-                    <label htmlFor="phoneNumber" className="text-white">
-                      Enter New Password
-                    </label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      value={enternewpassword}
-                      onChange={(e) => setEnternewpassword(e.target.value)}
-                      className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
-                    />
-                  </div>
-                  <div className="w-full  px-2 mb-4">
-                    <label htmlFor="phoneNumber" className="text-white">
-                    Enter New Password Again
-                    </label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
+                      type={showEnterNewPassword ? 'text' : 'password'}
+                      id="enterNewPasswordAgain"
                       value={enternewpasswordagain}
                       onChange={(e) => setEnternewpasswordagain(e.target.value)}
                       className="w-full px-4 py-2 text-white bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
                     />
+                    <button
+                      type="button"
+                      className="absolute top-1/2 right-4"
+                      onClick={() => setShowEnterNewPassword(!showEnterNewPassword)}
+                    >
+                      {showEnterNewPassword ? (
+                        <AiOutlineEyeInvisible size={20} className="text-gray-400 hover:text-gray-600" />
+                      ) : (
+                        <AiOutlineEye size={20} className="text-gray-400 hover:text-gray-600" />
+                      )}
+                    </button>
                   </div>
                   
                   {/* Add more Change Password form fields */}
@@ -251,13 +286,7 @@ const GeneralProfileForm = ({ onClose }) => {
               >
                 Save Changes
               </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="text-blue-600 font-Poppins hover:bg-gradient-to-b ml-8 from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-5 py-2 rounded-full transition-all duration-300"
-              >
-                Discard Changes
-              </button>
+              
             </div>
               </div>
             )}

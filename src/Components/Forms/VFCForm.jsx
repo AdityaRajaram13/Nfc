@@ -1,38 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { updateProfile } from '../../Services/ProfileService'; // Update the path accordingly
+import { deleteCustomField } from '../../Services/ProfileService';
+import { deleteProfile  } from '../../Services/ProfileService';
 
 
-const VFCForm = ({ onClose, selectedProfile }) => {
-  const [displayName, setDisplayName] = useState(selectedProfile.Profilename);
-  const [designation, setDesignation] = useState(selectedProfile.Designation);
-  const [email, setEmail] = useState(selectedProfile.Email); 
+const VFCForm = ({ onClose, selectedProfile, selectedCustomFieldID }) => {
+  // State to manage the form field values
+  const [displayName, setDisplayName] = useState('');
+  const [designation, setDesignation] = useState('');
+  const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [customFields, setCustomFields] = useState([]);
+  const [customFieldsToDelete, setCustomFieldsToDelete] = useState([]);
+
 
   const handleAddNew = () => {
-    setCustomFields([...customFields, { status: false, type: 'mobile', text: '' }]);
+    setCustomFields([
+      ...customFields,
+      { status: false, type: '', text: '', customFieldID: null } // Add customFieldID
+    ]);
+  };
+  
+
+
+
+
+
+
+
+  const handleDeleteProfile = async (profileID) => {
+    const shouldDeleteProfile = window.confirm("Are you sure you want to delete this profile?");
+    
+    if (shouldDeleteProfile) {
+      try {
+        // Call the deleteProfile function with the selected profile's ID
+        const response = await deleteProfile(profileID);
+  
+        // Profile deleted successfully, you might want to perform some actions here
+  
+      } catch (error) {
+        console.error('Error deleting profile:', error);
+        // Handle the error as needed
+      }
+      
+      // Reload the page after deletion
+      window.location.reload();
+    }
   };
 
-  const handleDelete = (index) => {
-    const updatedCustomFields = [...customFields];
-    updatedCustomFields.splice(index, 1);
-    setCustomFields(updatedCustomFields);
-  };
 
-  const handleStatusChange = (index) => {
-    const updatedCustomFields = [...customFields];
-    updatedCustomFields[index].status = !updatedCustomFields[index].status;
-    setCustomFields(updatedCustomFields);
-  };
+
 
   const handleTypeChange = (index, e) => {
     const updatedCustomFields = [...customFields];
-    updatedCustomFields[index].type = e.target.value;
+    updatedCustomFields[index].type = e.target.value; // Set the FieldName based on the selected value
     setCustomFields(updatedCustomFields);
   };
 
@@ -41,6 +68,133 @@ const VFCForm = ({ onClose, selectedProfile }) => {
     updatedCustomFields[index].text = e.target.value;
     setCustomFields(updatedCustomFields);
   };
+
+  
+  const handleDelete = (index, customFieldID) => {
+    const updatedCustomFields = customFields.filter((_, i) => i !== index);
+    setCustomFields(updatedCustomFields);
+  
+    // Only add the customFieldID to the array if it's not null
+    if (customFieldID) {
+      setCustomFieldsToDelete(prevCustomFieldsToDelete => [
+        ...prevCustomFieldsToDelete,
+        { customFieldID }
+      ]);
+    }
+  };
+  
+
+
+  const handleUpdateProfile = async () => {
+
+    if (!displayName || !designation || !email || !phoneNumber) {
+      // Display an error message for required fields
+      alert('Please fill in all required fields.');
+      return;
+    }
+  
+    // Email validation
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+  
+    // Phone number validation (you can add your own validation criteria)
+    if (!/^\d{10}$/.test(phoneNumber)) {
+      alert('Please enter a valid 10-digit phone number.');
+      return;
+    }
+  
+    // Custom field validations
+    for (const field of customFields) {
+      if (!field.type || !field.text) {
+        alert('Please fill in all custom fields.');
+        return;
+      }
+  
+      if (field.type === 'email' && !emailPattern.test(field.text)) {
+        alert(`Please enter a valid email address for the custom field: ${field.text}`);
+        return;
+      }
+  
+      if (field.type === 'phone' && !/^\d{10}$/.test(field.text)) {
+        alert(`Please enter a valid 10-digit phone number for the custom field: ${field.text}`);
+        return;
+      }
+  
+      // You can add more custom field validations here as needed
+    }
+  
+    try {
+      const updatedCustomFields = customFields.map((field) => ({
+        customFieldID: field.customFieldID,
+        FieldName: field.type,
+        Value: field.text,
+      }));
+  
+      const updatedProfileData = {
+        profileID: selectedProfile.profileID,
+        profileName: displayName,
+        designation,
+        email,
+        website,
+        companyName,
+        mobile: phoneNumber,
+        address,
+        customFields: updatedCustomFields,
+      };
+  
+      const deletedCustomFields = customFieldsToDelete
+        .filter((field) => field.customFieldID !== null)
+        .map((field) => field.customFieldID);
+  
+      const shouldApplyChanges = window.confirm("Apply changes to the profile?");
+  
+      if (shouldApplyChanges) {
+        for (const customFieldID of deletedCustomFields) {
+          await deleteCustomField(customFieldID);
+          console.log('Custom field deleted:', customFieldID);
+        }
+  
+        const updatedProfile = await updateProfile(updatedProfileData);
+        console.log('Profile updated:', updatedProfile);
+  
+        // Apply changes without a second confirmation
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Handle the error as needed
+    }
+  };
+  
+useEffect(() => {
+  if (selectedProfile) {
+    setDisplayName(selectedProfile.Profilename);
+    setDesignation(selectedProfile.Designation);
+    setEmail(selectedProfile.email);
+    setWebsite(selectedProfile.website);
+    setCompanyName(selectedProfile.companyName);
+    setPhoneNumber(selectedProfile.PhoneNumber);
+    setAddress(selectedProfile.address);
+    
+   
+    const initialCustomFields = selectedProfile.customFields
+      ? selectedProfile.customFields.map(field => ({
+          customFieldID: field.CustomFieldID, // Assign the fetched customFieldID here
+          type: field.FieldName,
+          text: field.Value,
+        }))
+      : [];
+
+      console.log('Selected Profile Custom Fields:', selectedProfile.customFields);
+    console.log('Initial Custom Fields:', initialCustomFields);
+    setCustomFields(initialCustomFields);
+  }
+}, [selectedProfile]);
+
+
 
   return (
     <div className="  rounded-xl p-4 overflow-y-auto max-h-[calc(100vh-60px)]" style={{ backgroundColor: "#111536" }}>
@@ -62,6 +216,8 @@ const VFCForm = ({ onClose, selectedProfile }) => {
           <AiOutlineCloseCircle size={24} className="text-red-500 hover:text-red-600 mr-1" />
         </button>
           </div>
+          <input type="hidden" name="profileID" value={selectedProfile ? selectedProfile.profileID : ''} />
+
         <hr className="my-4  border-blue-600" />
         <div className="flex flex-wrap -mx-2">
           <div className="w-full  px-2 mb-4">
@@ -149,98 +305,67 @@ const VFCForm = ({ onClose, selectedProfile }) => {
           className="custom-fields-container "
           style={{ scrollbarWidth: "thin", scrollbarColor: "gray dark" }}
         >
+       
         {customFields.map((field, index) => (
-          <div key={index} className="flex items-center mb-4 ">
-            {/* <style>
-                {`
-                  .overflow-y-auto::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}
-              </style> */}
-            <div className="flex items-center ">
-              {/* <span className="mr-2">Status:</span> */}
-              <label
-                htmlFor={`toggle${index}`}
-                className={`flex items-center cursor-pointer`}
+         <div key={`customField_${index}`} className="md:flex items-center mb-4 ">
+           
+      
+            <div className="flex items-center">
+              <span className="mx-2 text-white">Type:</span>
+              <select
+              className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+              value={field.type}
+              onChange={(e) => handleTypeChange(index, e)}
+              data-customfieldid={field.customFieldID} // Add data attribute
               >
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    id={`toggle${index}`}
-                    className="sr-only"
-                    checked={field.status}
-                    onChange={() => handleStatusChange(index)}
-                  />
-                  <div
-                    className={`block w-12 h-6 rounded-full ${
-                      field.status ? 'bg-green-500' : 'bg-red-500'
-                    }`}
-                  ></div>
-                  <div
-                    className={`dot absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition ${
-                      field.status ? 'translate-x-6' : 'translate-x-0'
-                    }`}
-                  ></div>
-                </div>
-                {/* <div className="ml-3 text-gray-700 font-medium">
-                  {field.status ? 'Enabled' : 'Disabled'}
-                </div> */}
-              </label>
+                 <option className="text-white" style={{ backgroundColor: "#111536" }} value="">Select a custom field type</option>
+                <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile Number</option>
+                <option className="text-white" style={{ backgroundColor: "#111536" }}  value="email">Email</option>
+                <option className="text-white" style={{ backgroundColor: "#111536" }}  value="address">Address</option>
+                <option className="text-white" style={{ backgroundColor: "#111536" }}  value="website">Website</option>
+                <option className="text-white" style={{ backgroundColor: "#111536" }}  value="company">Company Name</option>
+              </select>
             </div>
-            <div className="flex items-center">
-  <span className="mx-2 text-white">Type:</span>
-  <select
-    className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
-    value={field.type}
-    onChange={(e) => handleTypeChange(index, e)}
-  >
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile Number</option>
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="email">Email</option>
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="address">Address</option>
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="website">Website</option>
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="company">Company Name</option>
-  </select>
-</div>
 
-            <div className="flex items-center">
+            <div className="flex space-y-2 md:space-y-0 items-center">
               <label htmlFor={`text${index}`} className="text-white mx-2">
                 Text:
               </label>
               <input
                 type="text"
                 id={`text${index}`}
-                className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+                className="px-4 py-2 bg-transparent ml-1 border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
                 value={field.text}
                 onChange={(e) => handleTextChange(index, e)}
               />
-              <button
-              className="px-3 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 ml-4 flex items-center"
-              onClick={() => handleDelete(index)}
-            >
-              <FiTrash2 className="w-5 h-5" />
-              
-              </button>
-            </div>
+          <button
+            className="px-3 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 ml-4 flex items-center"
+             onClick={() => handleDelete(index, field.customFieldID)}
+             >
+            <FiTrash2 className="w-5 h-5" />   
+          </button>
+          </div>
             
           </div>
-        ))}
-      </div>
-      </div>
+          ))}
+        </div>
+        </div>
         {/* ...custom fields */}
         <div className="flex justify-center py-10">
-          <button
-            type="submit"
-            className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
-          >
-            Save Changes
-          </button>
-          <button
-            type="submit"
-            className="text-blue-600 ml-6 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
-          >
-            Delete Profile
-          </button>
+        <button
+          type="button"
+          className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
+          onClick={handleUpdateProfile}
+        >
+          Save Changes
+        </button>
+        <button
+          className="text-blue-600 ml-6 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
+          type="button"
+          onClick={() => handleDeleteProfile(selectedProfile.profileID)}
+        >
+          Delete Profile
+        </button>
           
         </div>
       </div>

@@ -2,10 +2,6 @@ import React, { useState,useEffect } from 'react';
 import CardList from '../Components/Dashboards/CardList';
 import MySvg from '../assets/Images/Header.svg';
 import { getProfiles } from '../Services/ProfileService';
-import { fetchProfileData } from '../Redux/Action/action';
-import { useDispatch } from 'react-redux';
-import { updateProfile } from '../Services/ProfileService';
-import {setProfileData} from '../Redux/Action/action'
 import { updateIsDefaultProfile } from '../Services/ProfileService';
 import VFCForm from '../Components/Forms/VFCForm';
 import { useNavigate } from 'react-router-dom';
@@ -14,15 +10,19 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   
 
-
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(cards[0]); // Initialize selectedCard with the first card
   const [showVFCForm, setShowVFCForm] = useState(false);
-  const dispatch = useDispatch();
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [selectedCustomFieldID, setSelectedCustomFieldID] = useState(null); // Define the state for selectedCustomFieldID
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchProfiles();
+    const fetchAndSetProfiles = async () => {
+      await fetchProfiles();
+    };
+  
+    fetchAndSetProfiles();
   }, []);
 
   const fetchProfiles = async () => {
@@ -30,22 +30,40 @@ const Dashboard = () => {
       const profiles = await getProfiles();
       const simplifiedCards = profiles.map((profile) => ({
         id: profile.profileID,
+        profileID: profile.profileID,
         Profilename: profile.profileName,
         Designation: profile.designation,
         companyName: profile.companyName,
         PhoneNumber: profile.mobile,
+        email: profile.email,
+        website: profile.website,
+        address: profile.address,
+        Visitcount: profile.Visitcount,
+        IsDefaultProfile: profile.IsDefaultProfile,
+        customFields: profile.customFields || [],
       }));
+  
       setCards(simplifiedCards); // Update the cards state with the simplified card data
-      setSelectedCard(simplifiedCards[0]); // Initialize selectedCard with the first simplified card
+  
+      // Find the card with IsDefaultProfile set to true
+      const defaultCard = simplifiedCards.find((card) => card.IsDefaultProfile);
+      if (defaultCard) {
+        setSelectedCard(defaultCard); // Set the selected card as the default card
+        setSelectedProfile(defaultCard);
+      }
+  
+      const selectedCustomFieldID = defaultCard?.customFields[0]?.CustomFieldID || null;
+      setSelectedCustomFieldID(selectedCustomFieldID);
     } catch (error) {
       console.error('Error fetching profiles:', error);
       // Handle the error, for example, show an error message to the user.
     }
   };
+
   
   const handleCardClick = async (card) => {
     setSelectedCard(card);
-  
+    setSelectedProfile(card);  
     console.log('Selected Card ID:', card.id);
   
     try {
@@ -59,11 +77,9 @@ const Dashboard = () => {
           console.log(`IsDefaultProfile updated to ${isDefault} for Profile ID ${profile.profileID}`);
         })
       );
-  
       console.log('IsDefaultProfile updated successfully');
   
       // If needed, dispatch the fetchProfileData action here
-      dispatch(fetchProfileData(card.id));
   
     } catch (error) {
       console.error('Error updating IsDefaultProfile:', error);
@@ -81,19 +97,14 @@ const Dashboard = () => {
     navigate('/AddNewCardForm');
   };
   
-  
-  
-  
-  
-  
   console.log('Cards:', cards);
   console.log('Selected Card:', selectedCard);
 
+
   return (
     <div className="p-4 h-screen overflow-auto " style={{ backgroundColor: "#0D0F23" }}>
-      <div className="mt-20 ml-20 relative">
-        <div className="mt-32 w-[800px] lg:w-[850px] xl:w-[1050px] rounded-3xl bg-gradient-to-t from-cyan-950 to-indigo-950 p-4 relative overflow-hidden">
-          <p className="text-2xl font-Poppins font-bold text-white mt-2">
+      <div className="mt-20 md:ml-20 relative">
+        <div className="mt-32  max-w-[1050px] rounded-3xl bg-gradient-to-t from-cyan-950 to-indigo-950 p-4 relative overflow-hidden">          <p className="text-2xl font-Poppins font-bold text-white mt-2">
             Check out our premier plan to avail <br /> exclusive card templates.
           </p>
           <button className="explore-button font-Poppins bg-gradient-to-t from-blue-600 to-violet-500 text-white mt-4 py-2 px-4 rounded-full shadow">
@@ -103,7 +114,7 @@ const Dashboard = () => {
         <img
           src={MySvg}
           alt="SVG"
-          className="absolute bottom-[58%] left-[40%] transform -translate-x-1/8"
+          className="invisible md:visible absolute -top-[11%] left-[40%] transform -translate-x-1/12"
           style={{
             width: "50vw",
             maxWidth: "300px",
@@ -145,7 +156,8 @@ const Dashboard = () => {
             </button>
             <VFCForm
               onClose={() => setShowVFCForm(false)}
-              selectedProfile={selectedCard}
+              selectedProfile={selectedProfile} // Pass the selected profile data
+             selectedCustomFieldID={selectedCustomFieldID} // Pass the selected customFieldID
             />
           </div>
         </div>

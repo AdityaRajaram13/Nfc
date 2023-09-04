@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import { logoutUser } from '../utils/auth';
 import { AuthContext } from '../utils/authContext'; // Import the AuthContext
+import { CgProfile } from 'react-icons/cg';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -71,7 +72,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 border-b-2 border-blue-600" style={{ backgroundColor: "#111536" }}>
+    <header className="h-16 w-full flex items-center relative z-50 justify-end px-5 space-x-10 border-b-2 border-blue-600" style={{ backgroundColor: "#111536" }}>
       <ul className="flex space-x-4 text-white">
         <li className="font-medium"> <Link to="/">Home</Link></li>
         <li className="relative">
@@ -86,10 +87,9 @@ const Navbar = () => {
                 {/* Products Dropdown items */}
                 <ul className="py-2 px-4 space-y-2">
                   <li className="text-white font-Inter cursor-pointer hover:bg-violet-900 py-1 px-2 rounded-md" onClick={handleDropdownOptionClick}>
-                    Product 1
-                  </li>
-                  <li className="text-white font-Inter cursor-pointer hover:bg-violet-900 py-1 px-2 rounded-md" onClick={handleDropdownOptionClick}>
-                    Product 2
+                  <Link to="/products" className="block">
+                    Cards
+                  </Link>
                   </li>
                 </ul>
               </div>
@@ -100,11 +100,11 @@ const Navbar = () => {
       </ul>
 
       <div className="flex flex-shrink-0 items-center space-x-4 text-white">
-        <div className="relative">
-          <button
-            className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400"
+      <div className="relative">
+          <CgProfile
+            className="h-10 w-10 rounded-full cursor-pointer border-2 border-blue-400"
             onClick={() => setShowDropdown(true)}
-          >
+          />
             {showDropdown && (
               <div className="absolute top-full right-0 w-40 bg-blue-950 shadow rounded-md mt-3" ref={dropdownRef}>
                 <ul className="py-2 px-4 space-y-2">
@@ -136,7 +136,6 @@ const Navbar = () => {
                 </ul>
               </div>
             )}
-          </button>
         </div>
       </div>
     </header>

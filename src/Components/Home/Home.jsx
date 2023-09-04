@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 const LandingPage = () => {
   return (
-    <div>
+    <div classname="overflow-hidden">
       <Top />
       <Deals />
       <IndustrySelector />

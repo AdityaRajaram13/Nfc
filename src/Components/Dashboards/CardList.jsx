@@ -4,7 +4,15 @@ import { MdEdit } from "react-icons/md";
 
 const CardList = ({ cards, selectedCard, onCardClick, onVfcopen }) => {
   return (
-    <div className="mt-5 w-400 md:w-730 xl:w-1100  px-4 gap-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 ">
+    <div className="mt-5 w-400 overflow-auto max-h-[calc(100vh-388px)] md:w-730 xl:w-[1050px]  p-4 gap-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 ">
+      <style>
+          {`
+            .overflow-auto::-webkit-scrollbar {
+            display: none;
+            }
+          `}
+        </style>
+      
       {cards.map((card, index) => (
         <div
           key={card.id}
@@ -61,10 +69,13 @@ const CardList = ({ cards, selectedCard, onCardClick, onVfcopen }) => {
             <div className="absolute top-2 right-2 bg-gradient-to-br from-blue-500 to-violet-500 text-white font-Quicksand px-2 py-1 border border-1 rounded-full">
               P{index + 1}
             </div>
+            <div className=" absolute bottom-2 left-2 bg-gray-800 text-white px-2 py-1 font-Poppins rounded-full">
+                Profile Visits: {card.Visitcount}
+             </div>
 
             <div className="absolute top-12 right-3 cursor-pointer text-gray-400 hover:text-gray-200">
               <button
-                className="relative border border-2 border-blue-950 inline-flex items-center justify-center px-1 py-1 overflow-hidden font-mono font-medium tracking-tighter text-white bg-blue-950 rounded-full group"
+                className="relative  border-2 border-blue-950 inline-flex items-center justify-center px-1 py-1 overflow-hidden font-mono font-medium tracking-tighter text-white bg-blue-950 rounded-full group"
                 onClick={onVfcopen}
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-gradient-to-b from-blue-600 to-violet-500 rounded-full group-hover:w-56 group-hover:h-56"></span>

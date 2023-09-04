@@ -2,6 +2,7 @@
 
 const backendURL = import.meta.env.VITE_BACKEND_URL; // Replace with your backend URL
 
+//CREATE USER PROFILES
 export const createProfile = async (profileData) => {
   try {
     const response = await fetch(`${backendURL}/api/profile`, {
@@ -24,7 +25,7 @@ export const createProfile = async (profileData) => {
     throw new Error('Unable to create profile');
   }
 };
-
+  //ARRAY OF PROFILES 
 export const getProfiles = async () => {
     try {
       const response = await fetch(`${backendURL}/api/profile`, {
@@ -44,6 +45,7 @@ export const getProfiles = async () => {
     }
   };
 
+  //FETCH PARTICULAR PROFILE OF USER BASED ON PROFILE ID
   export const fetchProfileDetails = async (profileID) => {
     try {
       const response = await fetch(`${backendURL}/api/profile/${profileID}`, {
@@ -63,27 +65,75 @@ export const getProfiles = async () => {
     }
   };
 
-  export const updateProfile = async (profileID, updatedProfileData) => {
-    try {
-      const response = await fetch(`${backendURL}/api/profile/${profileID}`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: JSON.stringify(updatedProfileData),
-      });
   
-      if (!response.ok) {
-        throw new Error(`Failed to update profile data: ${response.statusText}`);
-      }
-  
-      const responseData = await response.json();
-      return responseData;
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      throw error;
-    }
-  };
-  
+//update Profile including customfield
+export const updateProfile = async (profileData) => {
+  try {
+    const response = await fetch(`${backendURL}/api/profile/${profileData.profileID}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(profileData),
+    });
 
+    if (!response.ok) {
+      throw new Error('Failed to update profile data');
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    throw new Error('Unable to update profile data');
+  }
+};
+
+
+//customfield Delete of particular profile
+export const deleteCustomField = async (customFieldID) => {
+  try {
+    const response = await fetch(`${backendURL}/api/profile/custom-field/${customFieldID}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete custom field');
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error deleting custom field:', error);
+    throw new Error('Unable to delete custom field');
+  }
+};
+
+//Delete Complete users particular profile
+export const deleteProfile = async (profileID) => {
+  try {
+    const response = await fetch(`${backendURL}/api/profile/${profileID}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete profile');
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error deleting profile:', error);
+    throw new Error('Unable to delete profile');
+  }
+};
+
+
+  
+//updateISdefault Value
   export const updateIsDefaultProfile = async (profileID, isDefaultProfile) => {
     try {
       const response = await fetch(`${backendURL}/api/profile/update-default/${profileID}`, {
@@ -107,6 +157,9 @@ export const getProfiles = async () => {
     }
   };
 
+
+
+  // get isDefault Profile
   export const getUserDefaultProfile = async (userID) => {
     try {
       const response = await fetch(`${backendURL}/${userID}`);
@@ -123,3 +176,4 @@ export const getProfiles = async () => {
       throw error;
     }
   };
+  

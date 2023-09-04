@@ -7,7 +7,7 @@ import Woodimage from "../../assets/Images/Wood.jpg";
 function Home() {
   return (
     <div>
-      <div className="flex flex-col md:flex-row mx-auto py-8" style={{ backgroundColor: '#111536' }}>
+      <div className=" overflow-hidden flex flex-col md:flex-row py-8" style={{ backgroundColor: '#111536' }}>
         {/* Content on the left */}
         <div className="md:w-3/5 flex justify-center items-center">
           <div className="text-center p-10 text-white">
@@ -45,10 +45,11 @@ function Home() {
             Stand out from the crowd and make lasting connections effortlessly.
           </p>
         </div>
-        <div className="flex flex-col md:flex-row min-h-screen items-center justify-center" style={{ backgroundColor: "#0D0F23" }}>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-3">
+        
+        <div className=" mt-20 md:mt-0 pb-4 flex  flex-col md:flex-row min-h-screen items-center justify-center" style={{ backgroundColor: "#0D0F23" }}>
+          <div className=" grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-3 w-72 md:w-[1000px]">
             {/* Card 1 */}
-            <div className="relative overflow-hidden transform transition-transform hover:scale-105 hover:rotate-3 group bg-white rounded-md shadow-lg">
+            <div className="relative  overflow-hidden transform transition-transform hover:scale-105 hover:rotate-3 group bg-white rounded-md shadow-lg">
               <div className="h-72 md:h-96 w-full md:w-80">
                 <img className="h-full w-full object-cover" src={goldimage} alt="" />
               </div>

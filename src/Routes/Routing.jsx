@@ -120,6 +120,8 @@ import SignUp from '../Components/LoginForm/SignUp';
 import { AuthContext } from '../utils/authContext';
 import Template from '../Pages/Template';
 import TemplateProfile from '../Pages/TemplateProfile';
+import Navbar from '../Components/Navbar';
+import ProductPage from '../Pages/Products';
 
 const Routing = () => {
   const { userLoggedIn, userType } = useContext(AuthContext);
@@ -136,6 +138,7 @@ const Routing = () => {
   return (
     <Routes>
       <Route path="/:userID" element={<TemplateProfile />} />
+      <Route path="/products" element={<><Navbar/><ProductPage /></>} />
       <Route element={<Layout />}>
         {/* Unauthenticated routes */}
         <Route path="/" element={<Home />} />

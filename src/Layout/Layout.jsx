@@ -47,7 +47,7 @@ const Layout = () => {
             <Sidebar />
           </div>
         )}
-        <main className="flex-grow bg-gray-100 overflow-hidden">
+        <main className="flex-grow overflow-hidden" style={{ backgroundColor: "#0D0F23" }}>
           <Outlet />
         </main>
       </div>

@@ -15,31 +15,38 @@ const ProfessionDisplay = () => {
   };
 
   const sliderSettings = {
+    dots: false,
     infinite: true,
-    speed: 500,
+    speed: 1000,             // Adjust slide transition speed for smoother sliding
     slidesToShow: 4,
     slidesToScroll: 1,
     centerMode: true,
+    autoplay: true,          // Enable autoplay
+    autoplaySpeed: 1100,     // Set the autoplay speed in milliseconds (e.g., 3 seconds)
+    pauseOnHover: true,      // Pause autoplay on hover for a smoother user experience
+    draggable: true,         // Enable dragging for smoother manual navigation
+    swipeToSlide: true,      // Enable swipe gestures for smoother navigation on touch devices
+    cssEase: "ease-in-out",  // Use ease-in-out for smoother transitions
     responsive: [
       {
-        breakpoint: 768, // Breakpoint for tablet screens
+        breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          centerMode: false, // Disable center mode for smaller screens
+          centerMode: false,
         },
       },
       {
-        breakpoint: 1024, // Breakpoint for desktop screens
+        breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          centerMode: false, // Disable center mode for larger screens
+          centerMode: false,
         },
       },
     ],
   };
-
+  
   return (
-    <div className="p-4 md:p-8 text-center bg-gray-900" style={containerStyle}>
+    <div className="p-6 md:p-8 overflow-hidden text-center bg-gray-900" style={containerStyle}>
       <h2 className="text-4xl md:text-5xl font-bold mb-8 md:mb-16 mt-4 md:mt-8 text-white">
         Explore Different Professions
       </h2>
