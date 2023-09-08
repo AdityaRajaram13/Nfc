@@ -1,24 +1,3 @@
-// import React, { useContext } from "react";
-// import { AuthContext } from "../../utils/authContext"; // Import your AuthContext here
-
-// function Header() {
- 
-
-//   return (
-//     <div className="fixed w-full  border-b-2 border-blue-600 text-white z-10" style={{ backgroundColor: "#111536" }}>
-//       <div className="flex items-center justify-between h-16">
-//         <div className="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 border-none">
-//           <img className="w-10 h-10 md:w-12 md:h-12 mr-3 rounded-full" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" alt="Profile" />
-//           <span className="hidden md:block text-lg font-semibold">ADMIN</span>
-//         </div>
-    
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Header;
-
 import React, { useContext } from "react";
 import { AuthContext } from "../../utils/authContext"; // Import your AuthContext here
 import { adminLogout } from "../../Services/adminservice";

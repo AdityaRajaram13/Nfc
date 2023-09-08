@@ -1,11 +1,10 @@
 // profileService.js
 
-const backendURL = import.meta.env.VITE_BACKEND_URL; // Replace with your backend URL
 
 //CREATE USER PROFILES
 export const createProfile = async (profileData) => {
   try {
-    const response = await fetch(`${backendURL}/api/profile`, {
+    const response = await fetch(`https://webapi.biscard.in/api/profile`, {
       method: 'POST',
       credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
       headers: {
@@ -28,7 +27,7 @@ export const createProfile = async (profileData) => {
   //ARRAY OF PROFILES 
 export const getProfiles = async () => {
     try {
-      const response = await fetch(`${backendURL}/api/profile`, {
+      const response = await fetch(`https://webapi.biscard.in/api/profile`, {
         method: 'GET',
         credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
       });
@@ -48,7 +47,7 @@ export const getProfiles = async () => {
   //FETCH PARTICULAR PROFILE OF USER BASED ON PROFILE ID
   export const fetchProfileDetails = async (profileID) => {
     try {
-      const response = await fetch(`${backendURL}/api/profile/${profileID}`, {
+      const response = await fetch(`https://webapi.biscard.in/api/profile/${profileID}`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -69,7 +68,7 @@ export const getProfiles = async () => {
 //update Profile including customfield
 export const updateProfile = async (profileData) => {
   try {
-    const response = await fetch(`${backendURL}/api/profile/${profileData.profileID}`, {
+    const response = await fetch(`https://webapi.biscard.in/api/profile/${profileData.profileID}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -94,7 +93,7 @@ export const updateProfile = async (profileData) => {
 //customfield Delete of particular profile
 export const deleteCustomField = async (customFieldID) => {
   try {
-    const response = await fetch(`${backendURL}/api/profile/custom-field/${customFieldID}`, {
+    const response = await fetch(`https://webapi.biscard.in/api/profile/custom-field/${customFieldID}`, {
       method: 'DELETE',
       credentials: 'include'
     });
@@ -114,7 +113,7 @@ export const deleteCustomField = async (customFieldID) => {
 //Delete Complete users particular profile
 export const deleteProfile = async (profileID) => {
   try {
-    const response = await fetch(`${backendURL}/api/profile/${profileID}`, {
+    const response = await fetch(`https://webapi.biscard.in/api/profile/${profileID}`, {
       method: 'DELETE',
       credentials: 'include',
     });
@@ -136,7 +135,7 @@ export const deleteProfile = async (profileID) => {
 //updateISdefault Value
   export const updateIsDefaultProfile = async (profileID, isDefaultProfile) => {
     try {
-      const response = await fetch(`${backendURL}/api/profile/update-default/${profileID}`, {
+      const response = await fetch(`https://webapi.biscard.in/api/profile/update-default/${profileID}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -162,7 +161,7 @@ export const deleteProfile = async (profileID) => {
   // get isDefault Profile
   export const getUserDefaultProfile = async (userID) => {
     try {
-      const response = await fetch(`${backendURL}/${userID}`);
+      const response = await fetch(`https://webapi.biscard.in/${userID}`);
       
       if (!response.ok) {
         const errorData = await response.json();

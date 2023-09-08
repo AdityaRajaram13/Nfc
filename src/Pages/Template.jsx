@@ -235,7 +235,7 @@ const Template = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${BASE_URL}/${userID}`, {
+      const response = await fetch(`https://webapi.biscard.in/${userID}`, {
         method: 'GET',
         credentials: 'include',
         headers: {

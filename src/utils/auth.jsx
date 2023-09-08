@@ -1,8 +1,7 @@
 // auth.js - Frontend
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL; // Import the environment variable
-const LOGIN_URL = `${BACKEND_URL}/api/login`;
-const LOGOUT_URL = `${BACKEND_URL}/api/logout`;
-const CHECK_AUTH = `${BACKEND_URL}/api/check-auth`;
+const LOGIN_URL = `https://webapi.biscard.in/api/login`;
+const LOGOUT_URL = `https://webapi.biscard.in/api/logout`;
+const CHECK_AUTH = `https://webapi.biscard.in/api/check-auth`;
 
 export const loginUser = async (userData) => {
   try {

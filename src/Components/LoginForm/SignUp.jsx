@@ -24,10 +24,10 @@ const SignUp = () => {
   
 
   const isPasswordValid = (password) => {
-    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,16}$/;
+    const passwordRegex = /^[A-Za-z\d@$#!%^&*]+$/;
     return passwordRegex.test(password);
   };
-
+  
   const isEmailValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -206,6 +206,10 @@ const SignUp = () => {
               Create
             </button>
           </div>
+          <hr className="my-8   border-blue-600" />
+          <p className="mt-4 font-Inter text-white text-center">
+            Already have an Account <Link to="/SignIn" className="text-blue-300 hover:text-blue-500">Login Here</Link>
+          </p>
         </form>
       </div>
     </div>

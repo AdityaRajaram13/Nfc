@@ -1,8 +1,7 @@
-const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export const adminLogin = async (username, password) => {
   try {
-    const response = await fetch(`${backendURL}/api/admin`, { // Use the new admin-login route
+    const response = await fetch(`https://webapi.biscard.in/api/admin`, { // Use the new admin-login route
       method: 'POST',
       credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
       headers: {
@@ -26,7 +25,7 @@ export const adminLogin = async (username, password) => {
 
 export const adminLogout = async () => {
   try {
-    const response = await fetch(`${backendURL}/api/admin/logout`, {
+    const response = await fetch(`https://webapi.biscard.in/api/admin/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: {

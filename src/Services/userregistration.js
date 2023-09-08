@@ -2,7 +2,7 @@
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-const API_URL = `${BACKEND_URL}/api/register`;  // Replace with your actual backend API URL
+const API_URL = `https://webapi.biscard.in/api/register`;  // Replace with your actual backend API URL
 
 export const registerUser = async (userData) => {
   try {

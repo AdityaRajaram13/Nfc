@@ -1,12 +1,10 @@
 // userDataService.js
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-
-
 
 export const getAllUsers = async () => {
   try {
-    const response = await fetch(`${backendURL}/api/register/admin/getallusers`, {
+    const response = await fetch(`https://webapi.biscard.in/api/register/admin/getallusers`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -27,8 +25,9 @@ export const getAllUsers = async () => {
 
 export const updateUser = async (userID, userData) => {
     try {
-      const response = await fetch(`${backendURL}/api/register/admin/${userID}`, {
+      const response = await fetch(`https://webapi.biscard.in/api/register/admin/${userID}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -49,8 +48,9 @@ export const updateUser = async (userID, userData) => {
 
   export const deleteUser = async (userID) => {
     try {
-      const response = await fetch(`${backendURL}/api/register/admin/${userID}`, {
+      const response = await fetch(`https://webapi.biscard.in/api/register/admin/${userID}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
   
       if (!response.ok) {
@@ -69,8 +69,9 @@ export const updateUser = async (userID, userData) => {
   
 export const addUser = async (userData) => {
     try {
-      const response = await fetch(`${backendURL}/api/register/admin/adduser`, {
+      const response = await fetch(`https://webapi.biscard.in/api/register/admin/adduser`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -95,8 +96,9 @@ export const addUser = async (userData) => {
 
   export const addUsersFromCSV = async (csvData) => {
     try {
-      const response = await fetch(`${backendURL}/api/register/admin/addusersfromcsv`, {
+      const response = await fetch(`https://webapi.biscard.in/api/register/admin/addusersfromcsv`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

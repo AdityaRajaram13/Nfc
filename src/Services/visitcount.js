@@ -4,7 +4,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export async function fetchTotalVisitCount(userID) {
   try {
-    const response = await fetch(`${backendURL}/api/visitcount/${userID}`,{
+    const response = await fetch(`https://webapi.biscard.in/api/visitcount/${userID}`,{
         method: 'GET',
         credentials: 'include',
       });

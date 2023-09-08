@@ -205,12 +205,11 @@ const UserProfile = () => {
   const [downloaded, setDownloaded] = useState(false); // State to track if data is downloaded
   const [profileImageURL, setProfileImageURL] = useState(null); 
 
-  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchImageURL = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/public/user/${userID}`);
+        const response = await fetch(`https://webapi.biscard.in/public/user/${userID}`);
         if (response.ok) {
           const data = await response.json();
           console.log('Response dataaaaa:', data);
@@ -235,7 +234,7 @@ const UserProfile = () => {
       const userToken = Cookies.get('userToken');
 
       // Make the fetch request to get user profile with the Authorization header
-      const response = await fetch(`${BASE_URL}/${userID}`, {
+      const response = await fetch(`https://webapi.biscard.in/${userID}`, {
         headers: {
           Authorization: `Bearer ${userToken}` // Include the token in the Authorization header
         },
