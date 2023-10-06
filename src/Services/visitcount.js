@@ -1,10 +1,10 @@
 // api.js
 
-const backendURL = import.meta.env.VITE_BACKEND_URL;
+const backendURL = 'http://localhost:3000';
 
 export async function fetchTotalVisitCount(userID) {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/visitcount/${userID}`,{
+    const response = await fetch(`http://localhost:3000/api/visitcount/${userID}`,{
         method: 'GET',
         credentials: 'include',
       });

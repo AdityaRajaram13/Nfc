@@ -20,6 +20,7 @@ const UserProfile = ({ profile, onEdit }) => {
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const [totalViews, setTotalViews] = useState(0);
   const [isVisible, setIsVisible] = useState(true); // State to control component visibility
+  const[userName, setUserName]= useState();
 
 
   const toggleVisibility = () => {
@@ -40,7 +41,7 @@ const UserProfile = ({ profile, onEdit }) => {
   };
 
   const storedUserID = localStorage.getItem('userID');
-  const qrCodeLink = storedUserID ? `https://biscard.in/${storedUserID}` : '';
+  const qrCodeLink = storedUserID ? `http://localhost:5173/${storedUserID}` : '';
 
   const handleUploadPicture = (event) => {
     const file = event.target.files[0];
@@ -54,7 +55,7 @@ const UserProfile = ({ profile, onEdit }) => {
         formData.append('userimage', file);
   
         const userID = localStorage.getItem('userID');
-        fetch(`https://webapi.biscard.in/api/update/${userID}`, {
+        fetch(`http://localhost:3000/api/update/${userID}`, {
           method: 'PUT',
           credentials: 'include',
           body: formData,
@@ -79,7 +80,7 @@ const UserProfile = ({ profile, onEdit }) => {
     // Delete the image on the server
     const userID = localStorage.getItem('userID');
 
-    fetch(`https://webapi.biscard.in/api/update/${userID}`, {
+    fetch(`http://localhost:3000/api/update/${userID}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -123,6 +124,11 @@ const UserProfile = ({ profile, onEdit }) => {
         .catch(error => {
           console.error('Error fetching visit count:', error);
         });
+
+        const storedName = localStorage.getItem('fullname');
+        if(storedName){
+          setUserName(storedName);
+        }
     }
   }, [userID]);
   // Add userID as a dependency
@@ -184,12 +190,12 @@ const UserProfile = ({ profile, onEdit }) => {
                   </div>
                 )}
               </div>
-              <h2 className="text-xl text-white font-bold">Name: {profile?.name || ''}</h2>
+                    <h2 className="text-xl text-white font-bold">Name: {userName || ''}</h2>
 
               <div className="flex justify-between space-x-6 mt-2">
                 <div className="flex flex-col items-center">
                   <div className="border border-blue-500 rounded-lg w-16 h-10 flex items-center justify-center">
-                    <p className="text-white">{totalViews}</p>
+                    <p className="text-white">{totalViews !== undefined ? totalViews: '0'}</p>
                   </div>
                   <p className="text-gray-400 text-sm font-bold mt-2">Total Visits</p>
                 </div>
@@ -216,8 +222,7 @@ const UserProfile = ({ profile, onEdit }) => {
           {isModalOpen && (
           <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50">
             <div className="z-10">
-              <GeneralProfileForm onClose={handleModalClose} />
-            </div>
+            <GeneralProfileForm onClose={handleModalClose} userName={userName} setUserName={setUserName} />            </div>
           </div>
         )}
       </div>

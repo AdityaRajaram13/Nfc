@@ -1,9 +1,10 @@
 // userService.js
 
+const backendURL = 'http://localhost:3000';
 
 export const updateUser = async (userData) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/updateuser`, {
+    const response = await fetch(`http://localhost:3000/api/updateuser`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -29,14 +30,12 @@ export const updateUser = async (userData) => {
 
 export const getUserData = async () => {
     try {
-      const response = await fetch(`https://webapi.biscard.in/api/getuser`, {
+      const response = await fetch(`http://localhost:3000/api/getuser`, {
         method: 'GET',
         credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
         headers: {
           'Content-Type': 'application/json',
-          // Add any other necessary headers for authentication
-          // For example, you might include an authorization token
-          // 'Authorization': `Bearer ${yourAuthToken}`,
+          
         },
       });
   
@@ -55,7 +54,7 @@ export const getUserData = async () => {
   
   export const updatePassword = async (userData) => {
     try {
-      const response = await fetch(`https://webapi.biscard.in/api/updatepassword`, {
+      const response = await fetch(`http://localhost:3000/api/updatepassword`, {
         method: 'PUT',
         credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
         headers: {

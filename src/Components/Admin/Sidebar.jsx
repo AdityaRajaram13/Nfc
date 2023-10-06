@@ -21,7 +21,6 @@ function Sidebar() {
             </a>
           </li>
           
-          {/* Add more li elements for other links */}
         </ul>
         <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2023</p>
       </div>

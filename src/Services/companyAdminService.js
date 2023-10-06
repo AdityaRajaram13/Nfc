@@ -1,12 +1,12 @@
+// companyAdminService.js
 
 const backendURL = 'http://localhost:3000';
 
-
-export const adminLogin = async (username, password) => {
+export const companyAdminLogin = async (username, password) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/admin`, { // Use the new admin-login route
+    const response = await fetch(`http://localhost:3000/api/companyadmin/login`, {
       method: 'POST',
-      credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -14,7 +14,9 @@ export const adminLogin = async (username, password) => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to log in');
+      const errorResponse = await response.json();
+      const errorMessage = errorResponse.message || 'Failed to log in';
+      throw new Error(errorMessage);
     }
 
     const responseData = await response.json();
@@ -26,9 +28,9 @@ export const adminLogin = async (username, password) => {
 };
 
 
-export const adminLogout = async () => {
+export const companyAdminLogout = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/api/admin/logout`, {
+    const response = await fetch(`http://localhost:3000/api/companyadmin/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -40,10 +42,10 @@ export const adminLogout = async () => {
       const data = await response.json();
       return data;
     } else {
-      throw new Error('Admin logout failed');
+      throw new Error('CompanyAdmin logout failed');
     }
   } catch (error) {
-    console.error('Error during admin logout:', error);
+    console.error('Error during CompanyAdmin logout:', error);
     throw error;
   }
 };

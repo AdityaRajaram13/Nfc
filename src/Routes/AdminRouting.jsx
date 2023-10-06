@@ -38,7 +38,6 @@ const AdminRouting = () => {
              <Route path="/signin" element={<Navigate to="/admin/dashboard" replace />} />
              <Route path="/signup" element={<Navigate to="/admin/dashboard" replace />} />
 
-
           </>
         ) : (
           // Redirect to SignIn for unauthenticated users or non-admin users

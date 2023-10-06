@@ -204,12 +204,13 @@ const UserProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [downloaded, setDownloaded] = useState(false); // State to track if data is downloaded
   const [profileImageURL, setProfileImageURL] = useState(null); 
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 
   useEffect(() => {
     const fetchImageURL = async () => {
       try {
-        const response = await fetch(`https://webapi.biscard.in/public/user/${userID}`);
+        const response = await fetch(`${BASE_URL}/public/user/${userID}`);
         if (response.ok) {
           const data = await response.json();
           console.log('Response dataaaaa:', data);
@@ -234,7 +235,7 @@ const UserProfile = () => {
       const userToken = Cookies.get('userToken');
 
       // Make the fetch request to get user profile with the Authorization header
-      const response = await fetch(`https://webapi.biscard.in/${userID}`, {
+      const response = await fetch(`http://localhost:3000/${userID}`, {
         headers: {
           Authorization: `Bearer ${userToken}` // Include the token in the Authorization header
         },
@@ -372,12 +373,12 @@ END:VCARD
 
               {/* Download Icon Button */}
               <div className="mt-4">
-                <a
+                <button
                   onClick={handleDownload}
                   className="flex items-center text-white font-semibold hover:text-slate-400"
                 >
                   <FaDownload className="mr-2" /> Download VCF
-                </a>
+                </button>
               </div>
             </div>
           </div>

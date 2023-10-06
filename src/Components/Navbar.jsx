@@ -64,6 +64,7 @@ const Navbar = () => {
       // Remove user ID and userType from local storage
       localStorage.removeItem('userID');
       localStorage.removeItem('userType');
+      localStorage.removeItem('userToken');
       // Navigate the user to the home page
       navigate('/');
     } else {

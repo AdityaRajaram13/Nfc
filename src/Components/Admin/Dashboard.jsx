@@ -32,16 +32,13 @@ const Dashboard = () => {
   };
 
 
-  const handleCSVFileChange = (event) => {
+  const handleCSVFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     setCsvFile(selectedFile);
-  };
-
-  // Function to handle adding users from CSV
-  const handleAddUsersFromCSV = async () => {
-    if (csvFile) {
+  
+    if (selectedFile) {
       try {
-        const csvText = await csvFile.text();
+        const csvText = await selectedFile.text();
         const csvRows = csvText.split('\n');
   
         // Skip the first row (header) and remove empty lines
@@ -63,9 +60,6 @@ const Dashboard = () => {
       }
     }
   };
-  
-  
-  
 
   const handleAddNewUser = () => {
     setIsNewUserFormOpen(true);
@@ -117,7 +111,7 @@ const Dashboard = () => {
     const csvContent = "data:text/csv;charset=utf-8,"
       + "User ID,Name,Username,Email,Phone,Password\n"
       + sampleUserData.map(user =>
-        `${user.UserID},"${user.Name}","${user.Username}","${user.Email}","${user.Phone}","${user.Password}"`
+        `${user.UserID},${user.Name},${user.Username},${user.Email},${user.Phone},${user.Password}`
       ).join("\n");
 
     const encodedUri = encodeURI(csvContent);
@@ -149,21 +143,23 @@ const Dashboard = () => {
 
         <div className="flex justify-end space-x-4">
         <input
-    type="file"
-    accept=".csv"
-    onChange={handleCSVFileChange} // Call the handler when a file is selected
-    onClick={handleAddUsersFromCSV}
-    className="hidden"
-    id="csvFileInput"
-  />
-  <label
+  type="file"
+  accept=".csv"
+  onChange={handleCSVFileChange}
+  className="hidden"
+  id="csvFileInput"
+  onClick={(event) => {
+    event.target.value = null; // Clear the selected file when the button is clicked
+  }}
+/>
 
-    htmlFor="csvFileInput"
-    className="flex items-center px-3 py-1 rounded-full bg-green-400 hover:bg-green-500 cursor-pointer"
-  >
-    <FiPlus className="w-5 h-5 mr-1" />
-    Add CSV
-  </label>
+<label
+  htmlFor="csvFileInput"
+  className="flex items-center px-3 py-1 rounded-full bg-green-400 hover:bg-green-500 cursor-pointer"
+>
+  <FiPlus className="w-5 h-5 mr-1" />
+  Add CSV
+</label>
           <button
             className="flex items-center px-3 py-1 rounded-full bg-blue-400 hover:bg-blue-500"
             onClick={downloadCSV}

@@ -3,7 +3,7 @@ import { AiOutlineCloseCircle, AiOutlineEye, AiOutlineEyeInvisible } from 'react
 import { updateUser, getUserData } from '../../Services/userService'; // Make sure to import the correct paths
 import { updatePassword } from '../../Services/userService'; // Import the password service
 
-const GeneralProfileForm = ({ onClose }) => {
+const GeneralProfileForm = ({ onClose , setUserName }) => {
   const [activeTab, setActiveTab] = useState('generalProfile');
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
@@ -78,6 +78,9 @@ const GeneralProfileForm = ({ onClose }) => {
           const response = await updateUser(updatedUserData);
           console.log('User information updated:', response.message);
           // Optionally, you can show a success message to the user
+          localStorage.setItem('fullname',updatedUserData.fullname);
+          setUserName(updatedUserData.fullname);
+          onClose();
         } catch (error) {
           console.error('Error updating user information:', error);
           // Optionally, you can show an error message to the user

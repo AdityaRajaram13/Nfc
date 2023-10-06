@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { isAuthenticated } from './auth'; // Import the isAuthenticated function
 
+const BACKEND_URL = 'http://localhost:3000';
 
-const CHECK_AUTH = `https://webapi.biscard.in/api/check-auth`;
+const CHECK_AUTH = `${BACKEND_URL}/api/check-auth`;
 
 const AuthContext = createContext();
 

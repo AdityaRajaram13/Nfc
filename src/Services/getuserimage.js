@@ -1,8 +1,11 @@
 
 // Function to fetch the user's image URL based on userID
+
+const BASE_URL = 'http://localhost:3000'; // Replace with your actual server URL
+
 export async function getUserImageURL(userID) {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/userimage/${userID}`,{
+    const response = await fetch(`http://localhost:3000/api/userimage/${userID}`,{
       method: 'GET',
       credentials: 'include',
       headers: {

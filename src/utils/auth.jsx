@@ -1,7 +1,6 @@
-// auth.js - Frontend
-const LOGIN_URL = `https://webapi.biscard.in/api/login`;
-const LOGOUT_URL = `https://webapi.biscard.in/api/logout`;
-const CHECK_AUTH = `https://webapi.biscard.in/api/check-auth`;
+const LOGIN_URL = `http://localhost:3000/api/login`;
+const LOGOUT_URL = `http://localhost:3000/api/logout`;
+const CHECK_AUTH = `http://localhost:3000/api/check-auth`;
 
 export const loginUser = async (userData) => {
   try {
@@ -45,41 +44,38 @@ export const loginUser = async (userData) => {
 
 export const isAuthenticated = async () => {
   try {
-    console.log('Checking authentication status...');
     const response = await fetch(`${CHECK_AUTH}`, {
       method: 'GET',
       credentials: 'include',
     });
 
-    console.log('Server response status:', response.status);
-    const responseText = await response.text(); // Read the response text only once
-    console.log('Response text:', responseText); // Log the complete response text
-
     if (!response.ok) {
-      console.log('User is not authenticated.');
+      console.error('Authentication failed with status:', response.status);
       return false;
     }
 
-    const responseJson = JSON.parse(responseText); // Parse the response text as JSON
-    console.log('Response JSON:', responseJson); // Log the response JSON
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const responseJson = await response.json();
+      console.log('Response JSON:', responseJson);
 
-    if (responseJson.userType === 'user') {
-      console.log('User is authenticated.');
-      return true;
+      if (responseJson.userType === 'user' || responseJson.userType === 'admin' || responseJson.userType === 'companyadmin') {
+        console.log(`${responseJson.userType} is authenticated.`);
+        return true;
+      } else {
+        console.error('User type not recognized.');
+      }
+    } else {
+      console.error('Response is not in JSON format.');
     }
 
-    if (responseJson.userType === 'admin') {
-      console.log('Admin is authenticated.');
-      return true;
-    }
-
-    console.log('User type not recognized or not authenticated.');
     return false;
   } catch (error) {
     console.error('Error checking authentication status:', error.message);
     return false;
   }
 };
+
 
 export const logoutUser = async () => {
   try {

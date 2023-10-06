@@ -5,14 +5,12 @@ import Navbar from '../Components/Navbar';
 import Sidebar from '../Components/Sidebar';
 import UserProfile from '../Components/UserProfile';
 import { AuthContext } from '../utils/authContext';
-import { isAuthenticated } from '../utils/auth';
 
 const Layout = () => {
   const { userLoggedIn, userType } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const isExcludedRoute = ['/', '/signin', '/signup'].includes(location.pathname);
-  const isTemplateRoute = location.pathname === '/Template'; // Check if it is the /Template route
 
   useEffect(() => {
     setLoading(false);
