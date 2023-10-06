@@ -1,161 +1,155 @@
-// import React, { useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
-// function Sidebar() {
-//   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-//   const toggleDrawer = () => {
-//     setIsDrawerOpen(!isDrawerOpen);
-//   };
-
-//   return (
-//     <div className="flex">
-//       <div
-//         className={`bg-gray-200 w-64 h-screen transition-transform duration-300 transform ${
-//           isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
-//         }`}
-//       >
-//         <div className="p-4 flex justify-between items-center bg-gray-300">
-//           <h2 className="text-lg font-bold">Drawer Sidebar</h2>
-//           <button
-//             className="text-gray-600 hover:text-gray-900 transition-colors"
-//             onClick={toggleDrawer}
-//           >
-//             <FontAwesomeIcon icon={isDrawerOpen ? faArrowLeft : faArrowRight} />
-//           </button>
-//         </div>
-//         <div className="p-4">
-//           <ul className="space-y-2">
-//             <li>Item 1</li>
-//             <li>Item 2</li>
-//             <li>Item 3</li>
-//             <li>Item 4</li>
-//           </ul>
-//         </div>
-//         <button
-//           className="absolute top-0 right-0 mt-4 mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-//           onClick={toggleDrawer}
-//         >
-//           Close Drawer
-//         </button>
-//       </div>
-//       {isDrawerOpen ? null : (
-//         <div className="flex-1 flex items-start">
-//           <button
-//             className="absolute top-0 left-0 mt-4 ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-//             onClick={toggleDrawer}
-//           >
-//             <FontAwesomeIcon icon={faArrowRight} />
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Sidebar;
-
-
-
-
-
-// import React from 'react';
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// const Sidebar = () => {
-//   return (
-//     <div>
-//       <div className="flex w-16 flex-col items-center">
-//         <div className="space-y-48  bg-black">
-//           <ul>
-//             <li className="p-5">
-//               <i className="fas fa-columns h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//             <li className="p-5">
-//               <i className="fas fa-users h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//             <li className="p-5">
-//               <i className="fas fa-cog h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//             <li className="p-5">
-//               <i className="fas fa-envelope h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//             <li className="p-5">
-//               <i className="fas fa-file-alt h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//             <li className="p-5">
-//               <i className="fas fa-bell h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
-//             </li>
-//           </ul>
-//         </div>
-//         {/* Rest of the component */}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
-
-
-
-import React,{useState}  from 'react';
-import Dashboard from './Dashboard';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BsGridFill } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineEye } from 'react-icons/ai';
-import { TiChartBar } from 'react-icons/ti';
-import { FaHistory } from 'react-icons/fa';
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
 const Sidebar = () => {
-  const [showDashboard, setShowDashboard] = useState(false);
+  const navigate = useNavigate();
+  const [iconStates, setIconStates] = useState({
+    dashboard: false,
+    addCard: false,
+    view: false,
+  });
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Adjust the breakpoint as needed
+  const [isMiniDrawerOpen, setIsMiniDrawerOpen] = useState(false); // State to track mini drawer open/close
 
-  const handleGridFillClick = () => {
-    setShowDashboard(true);
+  const userID = localStorage.getItem('userID');
+
+  const handleDashboardClick = () => {
+    navigate('/dashboard');
+    setIconStates({ dashboard: true, addCard: false, view: false });
   };
-  
-const Sidebar = () => {
+
+  const handleAddCardClick = () => {
+    navigate('/AddNewCardForm');
+    setIconStates({ dashboard: false, addCard: true, view: false });
+  };
+
+  const handleAddTemplateClick = () => {
+    navigate('/Template');
+    setIconStates({ dashboard: false, addCard: false, view: true });
+  };
+
+  useEffect(() => {
+    // Add a listener to handle window resize and update isMobile state
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      // Clean up the listener when the component unmounts
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const toggleMiniDrawer = () => {
+    setIsMiniDrawerOpen(!isMiniDrawerOpen);
+  };
+
+
   return (
-    <aside className="fixed top-0 left-0 h-screen w-16 flex flex-col space-y-10 items-center justify-center text-white" style={{ backgroundColor: "#111536" }}>
-      <div className="flex w-16 flex-col items-center">
-        <div className="space-y-48">
+    <aside className=" text-gray-500" style={{ backgroundColor: "#111536" }}>
+      {/* Normal sidebar for larger screens */}
+      {!isMobile && (
+        <div className="hidden md:flex flex-col items-center justify-center h-screen w-16">
           <ul>
-            <li className="p-5" onClick={handleGridFillClick}>
+            <li className="p-5" onClick={handleDashboardClick}>
               <BsGridFill
-                className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"
+                className={`h-6 w-6 cursor-pointer ${
+                  iconStates.dashboard ? 'text-yellow-500' : 'text-gray-500'
+                }`}
+                style={{ animation: iconStates.dashboard ? 'rainbowAnimation 2s infinite' : 'none' }}
               />
             </li>
-            <li className="p-5">
+            <li className="p-5" onClick={handleAddCardClick}>
               <BiUser
-                className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"
+                className={`h-6 w-6 cursor-pointer ${
+                  iconStates.addCard ? 'text-yellow-500' : 'text-gray-500'
+                }`}
+                style={{ animation: iconStates.addCard ? 'rainbowAnimation 2s infinite' : 'none' }}
               />
             </li>
-            <li className="p-5">
+            <li className="p-5" onClick={handleAddTemplateClick}>
               <AiOutlineEye
-                className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"
+                className={`h-6 w-6 cursor-pointer ${
+                  iconStates.view ? 'text-yellow-500' : 'text-gray-500'
+                }`}
+                style={{ animation: iconStates.view ? 'rainbowAnimation 2s infinite' : 'none' }}
               />
-            </li>
-            <li className="p-5">
-              <TiChartBar
-                className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"
-              />
-            </li>
-            <li className="p-5">
-              <FaHistory
-                className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"
-              />
-            </li>
-            <li className="p-5">
-              <i className="fas fa-bell h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-blue-600"></i>
             </li>
           </ul>
         </div>
-        {/* Rest of the component */}
-      </div>
-      {showDashboard && <Dashboard />}
+      )}
+
+        {/* Mini drawer for screens below md */}
+        {isMobile && (
+        <div className={`md:hidden ${isMiniDrawerOpen ? 'w-60' : 'w-16'} transition-all ease-in-out duration-300`}>
+          {/* Mini drawer content */}
+          {isMiniDrawerOpen && (
+            <div className="relative top-20 p-2" style={{ backgroundColor: "#111536" }}>
+              <ul className="flex flex-row ml-28 space-x-4">
+                {/* Add your mini drawer links here */}
+                <li onClick={handleDashboardClick}>
+                  <BsGridFill
+                    className={`h-6 w-6 cursor-pointer ${
+                      iconStates.dashboard ? 'text-yellow-500' : 'text-gray-500'
+                    }`}
+                    style={{ animation: iconStates.dashboard ? 'rainbowAnimation 2s infinite' : 'none' }}
+                  />
+                </li>
+                <li onClick={handleAddCardClick}>
+                  <BiUser
+                    className={`h-6 w-6 cursor-pointer ${
+                      iconStates.addCard ? 'text-yellow-500' : 'text-gray-500'
+                    }`}
+                    style={{ animation: iconStates.addCard ? 'rainbowAnimation 2s infinite' : 'none' }}
+                  />
+                </li>
+                <li onClick={handleAddTemplateClick}>
+                  <AiOutlineEye
+                    className={`h-6 w-6 cursor-pointer ${
+                      iconStates.view ? 'text-yellow-500' : 'text-gray-500'
+                    }`}
+                    style={{ animation: iconStates.view ? 'rainbowAnimation 2s infinite' : 'none' }}
+                  />
+                </li>
+              </ul>
+            </div>
+          )}
+          {/* Button to toggle the mini drawer */}
+          <button onClick={toggleMiniDrawer} className="p-3 absolute flex justify-center items-center top-[76px] left-0 text-white">
+  {isMiniDrawerOpen ? (
+    <>
+      <span className="mr-2">Close</span> <FaAngleDoubleLeft /> 
+    </>
+  ) : (
+    <>
+      <span className="mr-2">Open</span> <FaAngleDoubleRight />
+    </>
+  )}
+</button>
+        </div>
+      )}
+
+      <style>
+        {`
+          @keyframes rainbowAnimation {
+            0% { color: red; }
+            16.67% { color: orange; }
+            33.33% { color: yellow; }
+            50% { color: green; }
+            66.67% { color: blue; }
+            83.33% { color: indigo; }
+            100% { color: violet; }
+          }
+        `}
+      </style>
     </aside>
   );
 };
-}
+
 export default Sidebar;

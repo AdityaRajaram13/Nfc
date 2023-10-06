@@ -19,6 +19,8 @@ theme: {
       Quicksand:['Quicksand', 'sans-serif'],
       Montserrat:['Montserrat', 'sans-serif'],
       Inter:['Inter', 'sans-serif'],
+      Poppins:['Poppins', 'sans-serif'],
+
     },
     
     fontSize: {
