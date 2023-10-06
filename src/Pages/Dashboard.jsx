@@ -68,7 +68,7 @@ const Dashboard = () => {
   
     try {
       // Fetch all profiles for the user
-      const userProfiles = await getProfiles(); // You need to implement this function
+      const userProfiles = await  getProfiles(); // You need to implement this function
   
       await Promise.all(
         userProfiles.map(async (profile) => {
