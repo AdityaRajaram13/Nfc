@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { isAuthenticated } from './auth'; // Import the isAuthenticated function
 
 const BACKEND_URL = 'http://localhost:3000';
