@@ -1,52 +1,48 @@
 import React, { useState, useEffect } from 'react';
 
 function AlertBox() {
-    const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  let deferredInstallPrompt = null;
 
-    useEffect(() => {
-      const handleBeforeInstallPrompt = (event) => {
-        event.preventDefault();
-        console.log('beforeinstallprompt event captured:', event);
-      };
-  
-      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-  
-      return () => {
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      };
-    }, []);
-  
-    const handleInstall = () => {
-      // Trigger the custom installation prompt
-      window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        event.prompt();
-        console.log('Installation prompt triggered');
-  
-        // Wait for the user's choice
-        event.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the PWA installation');
-          } else {
-            console.log('User declined the PWA installation');
-          }
-          // Hide the installation prompt
-          setIsVisible(false);
-        });
-      });
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      console.log('beforeinstallprompt event captured:', event);
+      deferredInstallPrompt = event;
     };
-  
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstall = () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the PWA installation');
+        } else {
+          console.log('User declined the PWA installation');
+        }
+        setIsVisible(false);
+      });
+    }
+  };
+
+ 
+
     const handleCancel = () => {
       setIsVisible(false);
     };
   
     useEffect(() => {
-      // Set a timeout to hide the AlertBox after 10 seconds
       const timeout = setTimeout(() => {
         setIsVisible(false);
-      }, 10000); // 10000 milliseconds (10 seconds)
+      }, 10000); // 10 seconds
   
-      // Clear the timeout when the component unmounts
       return () => clearTimeout(timeout);
     }, []);
   
