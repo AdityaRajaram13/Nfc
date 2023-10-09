@@ -4,33 +4,25 @@ function AlertBox() {
     const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Check if the browser supports PWA installation
     if ('beforeinstallprompt' in window) {
-      // Prevent the default browser prompt
       const installPromptEvent = window.beforeinstallprompt;
       installPromptEvent.preventDefault();
 
-      // Show the installation prompt
       setIsVisible(true);
 
-      // Set up an event listener for the installation prompt
       installPromptEvent.userChoice.then((result) => {
         if (result.outcome === 'accepted') {
           console.log('User accepted the install prompt.');
-          // You can add further logic here if needed after installation
         } else {
           console.log('User declined the install prompt.');
-          // Handle the case where the user declined the installation
         }
 
-        // Hide the alert box once the user interacts with the prompt
         setIsVisible(false);
       });
     }
   }, []);
 
   const handleInstall = () => {
-    // Trigger the installation prompt for your PWA here
     if ('beforeinstallprompt' in window) {
       const installPromptEvent = window.beforeinstallprompt;
       console.log('handleInstall called'); // Add this line
@@ -40,8 +32,6 @@ function AlertBox() {
   
 
   const handleCancel = () => {
-    // Handle cancel logic here
-    // For example, you can simply hide the alert box
     setIsVisible(false);
   };
   return (
