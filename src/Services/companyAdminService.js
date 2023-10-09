@@ -1,10 +1,10 @@
 // companyAdminService.js
 
-const backendURL = 'https://webapi.biscard.in';
+const backendURL = 'http://localhost:3000';
 
 export const companyAdminLogin = async (username, password) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/companyadmin/login`, {
+    const response = await fetch(`http://localhost:3000/api/companyadmin/login`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -30,7 +30,7 @@ export const companyAdminLogin = async (username, password) => {
 
 export const companyAdminLogout = async () => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/companyadmin/logout`, {
+    const response = await fetch(`http://localhost:3000/api/companyadmin/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: {

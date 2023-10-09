@@ -1,10 +1,10 @@
 
-const backendURL = 'https://webapi.biscard.in';
+const backendURL = 'http://localhost:3000';
 
 
 export const adminLogin = async (username, password) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/admin`, { // Use the new admin-login route
+    const response = await fetch(`http://localhost:3000/api/admin`, { // Use the new admin-login route
       method: 'POST',
       credentials: 'include', // Include credentials for cross-origin requests (e.g., cookies)
       headers: {
@@ -28,7 +28,7 @@ export const adminLogin = async (username, password) => {
 
 export const adminLogout = async () => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/admin/logout`, {
+    const response = await fetch(`http://localhost:3000/api/admin/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: {

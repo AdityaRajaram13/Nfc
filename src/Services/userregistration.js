@@ -1,12 +1,12 @@
 // api/registration.js
 
-const BACKEND_URL = 'https://webapi.biscard.in';
+const BACKEND_URL = 'http://localhost:3000';
 
-const API_URL = `https://webapi.biscard.in/api/register`;  // Replace with your actual backend API URL
+const API_URL = `http://localhost:3000/api/register`;  // Replace with your actual backend API URL
 
 export const registerUser = async (userData) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/register`, {
+    const response = await fetch(`http://localhost:3000/api/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,8 +1,8 @@
-const backendURL = 'https://webapi.biscard.in'; // Update with your backend URL
+const backendURL = 'http://localhost:3000'; // Update with your backend URL
 
 export const deleteCompanyUser = async (CompanyAdminID, UserID) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/cpm/CompanyAdmin/${CompanyAdminID}/users/${UserID}`, {
+    const response = await fetch(`http://localhost:3000/api/cpm/CompanyAdmin/${CompanyAdminID}/users/${UserID}`, {
       method: 'DELETE',
       credentials: 'include', // Include cookies if your authentication relies on cookies
     });

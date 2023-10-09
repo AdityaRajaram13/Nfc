@@ -2,7 +2,7 @@
 // Define a function to add CompanyAdmins from CSV
 export const addCompanyAdminsFromCSV = async (companyAdminData) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/companyadmincsv/addcsv`, {
+    const response = await fetch(`http://localhost:3000/api/companyadmincsv/addcsv`, {
       method: 'POST',
       credentials: 'include',
       headers: {
