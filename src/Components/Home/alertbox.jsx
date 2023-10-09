@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 function AlertBox() {
     const [isVisible, setIsVisible] = useState(true);
-    const [promptInstall, setPromptInstall] = useState(null);
-  
+
     useEffect(() => {
       const handleBeforeInstallPrompt = (event) => {
         event.preventDefault();
-        setPromptInstall(event);
+        console.log('beforeinstallprompt event captured:', event);
       };
   
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -18,12 +17,14 @@ function AlertBox() {
     }, []);
   
     const handleInstall = () => {
-      if (promptInstall) {
-        // Trigger the custom installation prompt
-        promptInstall.prompt();
+      // Trigger the custom installation prompt
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        event.prompt();
+        console.log('Installation prompt triggered');
   
         // Wait for the user's choice
-        promptInstall.userChoice.then((choiceResult) => {
+        event.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the PWA installation');
           } else {
@@ -32,11 +33,10 @@ function AlertBox() {
           // Hide the installation prompt
           setIsVisible(false);
         });
-      }
+      });
     };
   
     const handleCancel = () => {
-      // Hide the installation prompt when the user cancels
       setIsVisible(false);
     };
   
@@ -49,7 +49,7 @@ function AlertBox() {
       // Clear the timeout when the component unmounts
       return () => clearTimeout(timeout);
     }, []);
-
+  
   return (
     <>
       {isVisible && (
@@ -57,10 +57,13 @@ function AlertBox() {
           <div className="bg-blue-500 text-white rounded-md absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-16 h-16">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-blue-500 w-4 h-4"></span>
           </div>
-          <p className="text-lg font-semibold text-black mb-4 mr-24 justify-center">
-            {/* Conditionally render different text for mobile screens */}
-            {window.innerWidth <= 768 ? 'Install App' : 'Add this app to your home screen for quick access. Do you want to install it?'}
-          </p>
+          <p className="text-xl font-semibold text-black mb-4 mr-24 justify-center">
+  {/* Conditionally render different text for mobile screens */}
+  {window.innerWidth > 768 && (
+    'Add this app to your home screen for quick access. Do you want to install it?'
+  )}
+</p>
+
           <div className="flex justify-end space-x-2">
             <button
               onClick={handleInstall}
