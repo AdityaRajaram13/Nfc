@@ -5,6 +5,7 @@ import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './utils/authContext';
 import OfflineMessage from './Components/OfflineMessage.jsx';
+import AlertBox from './Components/Home/alertbox.jsx';
 
 // Check if the browser supports service workers
 if ('serviceWorker' in navigator) {
@@ -21,6 +22,7 @@ if ('serviceWorker' in navigator) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
+  <AlertBox/>
     <OfflineMessage />
     <AuthProvider>
       <Router>
