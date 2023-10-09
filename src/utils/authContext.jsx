@@ -1,9 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { isAuthenticated } from './auth'; // Import the isAuthenticated function
 
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://webapi.biscard.in';
 
-const CHECK_AUTH = `${BACKEND_URL}/api/check-auth`;
+const CHECK_AUTH = `https://webapi.biscard.in/api/check-auth`;
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ const AuthProvider = ({ children }) => {
         setUserLoggedIn(isAuthenticatedUser);
 
         if (isAuthenticatedUser) {
-          const response = await fetch(`${CHECK_AUTH}`, {
+          const response = await fetch(`https://webapi.biscard.in/api/check-auth`, {
             method: 'GET',
             credentials: 'include',
           });

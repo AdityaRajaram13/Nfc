@@ -3,7 +3,7 @@
 
 export const createCompanyAdmin = async (companyAdminData) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/admin/companyadmin`, {
+    const response = await fetch(`https://webapi.biscard.in/api/admin/companyadmin`, {
       method: 'POST',
       credentials: 'include',
       headers: {

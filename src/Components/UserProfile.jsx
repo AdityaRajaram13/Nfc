@@ -41,7 +41,7 @@ const UserProfile = ({ profile, onEdit }) => {
   };
 
   const storedUserID = localStorage.getItem('userID');
-  const qrCodeLink = storedUserID ? `http://localhost:5173/${storedUserID}` : '';
+  const qrCodeLink = storedUserID ? `https://www.biscard.in/${storedUserID}` : '';
 
   const handleUploadPicture = (event) => {
     const file = event.target.files[0];
@@ -55,7 +55,7 @@ const UserProfile = ({ profile, onEdit }) => {
         formData.append('userimage', file);
   
         const userID = localStorage.getItem('userID');
-        fetch(`http://localhost:3000/api/update/${userID}`, {
+        fetch(`https://webapi.biscard.in/api/update/${userID}`, {
           method: 'PUT',
           credentials: 'include',
           body: formData,
@@ -80,7 +80,7 @@ const UserProfile = ({ profile, onEdit }) => {
     // Delete the image on the server
     const userID = localStorage.getItem('userID');
 
-    fetch(`http://localhost:3000/api/update/${userID}`, {
+    fetch(`https://webapi.biscard.in/api/update/${userID}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
