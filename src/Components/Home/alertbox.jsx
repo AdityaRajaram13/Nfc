@@ -3,25 +3,41 @@ import React, { useState, useEffect } from 'react';
 function AlertBox() {
     const [isVisible, setIsVisible] = useState(true);
 
- 
+  useEffect(() => {
+    if ('beforeinstallprompt' in window) {
+      const installPromptEvent = window.beforeinstallprompt;
+      installPromptEvent.preventDefault();
 
-    const handleInstall = () => {
-        const installPromptEvent = window.beforeinstallprompt;
-        if (installPromptEvent) {
-          installPromptEvent.prompt();
+      setIsVisible(true);
+
+      installPromptEvent.userChoice.then((result) => {
+        if (result.outcome === 'accepted') {
+          console.log('User accepted the install prompt.');
+        } else {
+          console.log('User declined the install prompt.');
         }
-      };
+
+        setIsVisible(false);
+      });
+    }
+  }, []);
+
+  const handleInstall = () => {
+    if ('beforeinstallprompt' in window) {
+      const installPromptEvent = window.beforeinstallprompt;
+      console.log('handleInstall called'); // Add this line
+      installPromptEvent.prompt();
+    }
+  };
+  
 
   const handleCancel = () => {
-    // Handle cancel logic here
-    // For example, you can simply hide the alert box
     setIsVisible(false);
   };
-
   return (
     <>
     {isVisible && (
-      <div className="fixed inset-x-0 z-100  bg-teal-500 justify-center  text-white text-center p-2 bottom-0 h-16 w-screen flex items-center justify-end px-5 space-x-10 border-b-2 border-blue-600">
+      <div className="fixed inset-x-0 z-70 bg-teal-500 justify-center  text-white text-center p-2 bottom-0 h-16 w-screen flex items-center justify-end px-5 space-x-10 border-b-2 border-blue-600">
           <div className="bg-blue-500 text-white rounded-md absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-16 h-16">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-blue-500 w-4 h-4"></span>
           </div>
