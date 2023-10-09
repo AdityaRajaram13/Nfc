@@ -19,6 +19,7 @@ export default defineConfig({
             type: 'image/svg+xml',
           },
         ],
+        form_factor: 'wide',
       },
     }),
     // ...other plugins

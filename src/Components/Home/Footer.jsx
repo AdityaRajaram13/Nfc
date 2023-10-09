@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="flex justify-between items-center mb-8">
           <div className="mb-6">
             <a href="/" className="flex items-center">
-              <span className="text-5xl font-Poppins font-bold">AVKardz</span>
+              <span className="text-5xl font-Poppins font-bold">Biscard</span>
             </a>
           </div>
         </div>

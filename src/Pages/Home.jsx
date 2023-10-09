@@ -16,6 +16,7 @@ const LandingPage = () => {
       <IndustrySelector />
       <Footer />
       <AlertBox/>
+
     </div>
   );
 };
