@@ -1,11 +1,11 @@
-const LOGIN_URL = `http://localhost:3000/api/login`;
-const LOGOUT_URL = `http://localhost:3000/api/logout`;
-const CHECK_AUTH = `http://localhost:3000/api/check-auth`;
+// const LOGIN_URL = `https://webapi.biscard.in/api/login`;
+// const LOGOUT_URL = `https://webapi.biscard.in/api/logout`;
+// const CHECK_AUTH = `https://webapi.biscard.in/api/check-auth`;
 
 export const loginUser = async (userData) => {
   try {
     console.log('Sending login request...');
-    const response = await fetch(LOGIN_URL, {
+    const response = await fetch(`https://webapi.biscard.in/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const loginUser = async (userData) => {
 
 export const isAuthenticated = async () => {
   try {
-    const response = await fetch(`${CHECK_AUTH}`, {
+    const response = await fetch(`https://webapi.biscard.in/api/check-auth`, {
       method: 'GET',
       credentials: 'include',
     });
@@ -80,7 +80,7 @@ export const isAuthenticated = async () => {
 export const logoutUser = async () => {
   try {
     console.log('Logging out...'); // Added this line
-    const response = await fetch(`${LOGOUT_URL}`, {
+    const response = await fetch(`https://webapi.biscard.in/api/logout`, {
       method: 'POST',
       credentials: 'include', // Include credentials to send the HTTP-only cookie
     });
