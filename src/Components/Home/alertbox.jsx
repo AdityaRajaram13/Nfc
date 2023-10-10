@@ -49,7 +49,7 @@ function AlertBox() {
   return (
     <>
       {isVisible && (
-        <div className="fixed inset-x-0 z-70 bg-teal-500 justify-center text-white text-center p-2 bottom-0 h-16 w-screen flex items-center justify-end px-5 space-x-10 border-b-2 border-blue-600">
+        <div className="hidden fixed inset-x-0 z-70 bg-teal-500 text-white text-center p-2 bottom-0 h-16 w-screen flex items-center justify-end px-5 space-x-10 border-b-2 border-blue-600">
           <div className="bg-blue-500 text-white rounded-md absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-16 h-16">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-blue-500 w-4 h-4"></span>
           </div>
@@ -60,7 +60,7 @@ function AlertBox() {
   )}
 </p>
 
-          <div className="flex justify-end space-x-2">
+          <div className="hidden  justify-end space-x-2">
             <button
               onClick={handleInstall}
               className="px-6 py-3 font-Poppins mdpx-9 md:py-4 bg-purple-500 hover:bg-purple-700 text-white font-semibold rounded-full animate-pulse"
