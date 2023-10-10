@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@rollup/plugin-terser": "^0.4.4",
     "copy-to-clipboard": "^3.3.3",
+    "hamburger-react": "^2.5.0",
     "install": "^0.13.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.284.0",

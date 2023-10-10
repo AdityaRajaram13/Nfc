@@ -3,6 +3,9 @@ import { Link,useNavigate } from 'react-router-dom';
 import { logoutUser } from '../utils/auth';
 import { AuthContext } from '../utils/authContext'; // Import the AuthContext
 import { CgProfile } from 'react-icons/cg';
+import Hamburger from 'hamburger-react';
+import profilePng from '../assets/Images/profile.png';
+
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -11,7 +14,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { userLoggedIn, setUserLoggedIn } = useContext(AuthContext); // Use the userLoggedIn state from context
-
+  const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
     // Event listener to detect clicks outside the dropdowns
@@ -72,8 +75,13 @@ const Navbar = () => {
     }
   };
 
+  const toggleMenu = () => {
+    setOpen(!isOpen);
+  };
+
   return (
-    <header className="h-16 w-full flex items-center relative z-50 justify-end px-5 space-x-10 border-b-2 border-blue-600" style={{ backgroundColor: "#111536" }}>
+    <header className="h-16 w-full  items-center relative z-50 justify-end px-5 space-x-10 border-b-2 border-blue-600" style={{ backgroundColor: "#111536" }}>
+      <div className="h-16 hidden md:flex w-full  items-center relative z-50 justify-end px-5 space-x-10 border-b-2" style={{ backgroundColor: "#111536" }}>
       <ul className="flex space-x-4 text-white">
         <li className="font-medium"> <Link to="/">Home</Link></li>
         <li className="relative">
@@ -99,7 +107,6 @@ const Navbar = () => {
         </li>
        
       </ul>
-
       <div className="flex flex-shrink-0 items-center space-x-4 text-white">
       <div className="relative">
           <CgProfile
@@ -139,7 +146,110 @@ const Navbar = () => {
             )}
         </div>
       </div>
+      </div>
+      <div className="md:hidden flex justify-end right-0" >
+      <Hamburger
+        toggled={isOpen}
+        toggle={toggleMenu}
+        color="#4FD1C5" 
+        className="m-2 z-[70]"      
+          // Apply Tailwind CSS margin class
+      />
+      </div>
+      {isOpen &&(
+     <div className="bg-blue-900 md:bg-transparent relative right-0">
+     <div className="text-xl md:hidden flex items-center justify-center right-0 py-4 font-bold">
+       <img
+         src={profilePng} // Use the imported profilePng variable here
+         alt="Profile"
+         onClick={() => setShowDropdown(true)}
+         className="cursor-pointer w-12 h-12 text-center"
+       />
+     </div>
+     <ul className="md:flex md:space-x-4 md:py-2 text-center flex-wrap">
+       <li className="md:py-2 text-xl">
+         <Link to="/" className="text-white hover:text-blue-300">
+           Home
+         </Link>
+       </li>
+       <li className="relative md:py-2 text-xl">
+         <button
+           onClick={() => handleProductDropdownHover(true)}
+           onMouseLeave={() => handleProductDropdownHover(false)}
+           className="text-white hover:text-blue-300 focus:outline-none"
+         >
+           Products
+           {showProductDropdown && (
+             <div
+               ref={dropdownRef}
+               className="absolute left-0 right-0 mt-2 bg-blue-900 md:bg-transparent md:w-auto"
+             >
+               {/* Products Dropdown items */}
+               <ul className="md:flex md:space-x-4 md:py-2 text-center">
+                 <li className="md:py-2" onClick={handleDropdownOptionClick}>
+                   <Link to="/products" className="text-white hover:text-blue-300">
+                     Cards
+                   </Link>
+                 </li>
+               </ul>
+             </div>
+           )}
+         </button>
+       </li>
+     </ul>
+     <div className="md:hidden">
+       <div className="mt-2">
+         {showDropdown && (
+           <div
+             ref={dropdownRef}
+             className="absolute left-0 right-0 mt-2 bg-blue-900"
+           >
+             <ul className="md:flex md:space-x-4 md:py-2 text-center">
+               {userLoggedIn ? (
+                 <>
+                   {/* Display Dashboard option for logged-in users */}
+                   <li
+                     className="md:py-2"
+                     onClick={handleDashboardClick}
+                   >
+                     My Profile
+                   </li>
+                   <li className="md:py-2" onClick={handleLogout}>
+                     Logout
+                   </li>
+                 </>
+               ) : (
+                 // If the user is not logged in, show "Login" and "Create Profile" options
+                 <>
+                   <Link
+                     to="/signin"
+                     onClick={() => setShowDropdown(false)}
+                     className="text-white hover:text-blue-300"
+                   >
+                     <li className="md:py-2">Log In</li>
+                   </Link>
+                   <Link
+                     to="/signup"
+                     onClick={() => setShowDropdown(false)}
+                     className="text-white hover:text-blue-300"
+                   >
+                     <li className="md:py-2">Create Profile</li>
+                   </Link>
+                 </>
+               )}
+             </ul>
+           </div>
+         )}
+       </div>
+     </div>
+   </div>
+   
+     
+      )}
+      
     </header>
+    
+
   );
 };
 
