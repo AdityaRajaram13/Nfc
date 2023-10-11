@@ -147,104 +147,114 @@ const Navbar = () => {
         </div>
       </div>
       </div>
-      <div className="md:hidden flex justify-end right-0" >
+      <div className="md:hidden flex justify-end right-0 py-2" >
       <Hamburger
         toggled={isOpen}
         toggle={toggleMenu}
         color="#4FD1C5" 
-        className="m-2 z-[70]"      
+        className="m-4 z-[70]"      
           // Apply Tailwind CSS margin class
       />
       </div>
-      {isOpen &&(
-     <div className="bg-blue-900 md:bg-transparent relative right-0">
-     <div className="text-xl md:hidden flex items-center justify-center right-0 py-4 font-bold">
-       <img
-         src={profilePng} // Use the imported profilePng variable here
-         alt="Profile"
-         onClick={() => setShowDropdown(true)}
-         className="cursor-pointer w-12 h-12 text-center"
-       />
-     </div>
-     <ul className="md:flex md:space-x-4 md:py-2 text-center flex-wrap">
-       <li className="md:py-2 text-xl">
-         <Link to="/" className="text-white hover:text-blue-300">
-           Home
-         </Link>
-       </li>
-       <li className="relative md:py-2 text-xl">
-         <button
-           onClick={() => handleProductDropdownHover(true)}
-           onMouseLeave={() => handleProductDropdownHover(false)}
-           className="text-white hover:text-blue-300 focus:outline-none"
-         >
-           Products
-           {showProductDropdown && (
-             <div
-               ref={dropdownRef}
-               className="absolute left-0 right-0 mt-2 bg-blue-900 md:bg-transparent md:w-auto"
-             >
-               {/* Products Dropdown items */}
-               <ul className="md:flex md:space-x-4 md:py-2 text-center">
-                 <li className="md:py-2" onClick={handleDropdownOptionClick}>
-                   <Link to="/products" className="text-white hover:text-blue-300">
-                     Cards
-                   </Link>
-                 </li>
-               </ul>
-             </div>
-           )}
-         </button>
-       </li>
-     </ul>
-     <div className="md:hidden">
-       <div className="mt-2">
-         {showDropdown && (
-           <div
-             ref={dropdownRef}
-             className="absolute left-0 right-0 mt-2 bg-blue-900"
-           >
-             <ul className="md:flex md:space-x-4 md:py-2 text-center">
-               {userLoggedIn ? (
-                 <>
-                   {/* Display Dashboard option for logged-in users */}
-                   <li
-                     className="md:py-2"
-                     onClick={handleDashboardClick}
-                   >
-                     My Profile
-                   </li>
-                   <li className="md:py-2" onClick={handleLogout}>
-                     Logout
-                   </li>
-                 </>
-               ) : (
-                 // If the user is not logged in, show "Login" and "Create Profile" options
-                 <>
-                   <Link
-                     to="/signin"
-                     onClick={() => setShowDropdown(false)}
-                     className="text-white hover:text-blue-300"
-                   >
-                     <li className="md:py-2">Log In</li>
-                   </Link>
-                   <Link
-                     to="/signup"
-                     onClick={() => setShowDropdown(false)}
-                     className="text-white hover:text-blue-300"
-                   >
-                     <li className="md:py-2">Create Profile</li>
-                   </Link>
-                 </>
-               )}
-             </ul>
-           </div>
-         )}
-       </div>
-     </div>
-   </div>
-   
+
+      {
+      isOpen &&(
+      <div className="fixed inset-0 w-[calc(100%-4.5rem)] translate-x-[-20%] bg-blue-200 border-r shadow-xl transition duration-300 lg:border-r-0 lg:w-auto lg:static lg:shadow-none lg:translate-x-0">        <div className="text-xl md:hidden flex items-center justify-center right-0 py-4 font-bold">
+         
+          <img
+            src={profilePng} // Use the imported profilePng variable here
+            alt="Profile"
+            onClick={() => setShowDropdown(true)}
+            className="cursor-pointer w-12 h-12 text-center"
+          />
+          <div className="mt-4">
+            {showDropdown && (
+              <div
+                ref={dropdownRef}
+                className="absolute left-0 right-0 mt-4 bg-blue-400 z-[20]"
+              >
+                <ul className="md:flex md:space-x-4 md:py-2 text-center">
+                  {userLoggedIn ? (
+                    <>
+                      <li
+                        className="md:py-2"
+                        onClick={() => {handleDashboardClick;
+                          setOpen(false);
+                        }}
+                      >
+                        My Profile
+                      </li>
+                      <li className="md:py-2" 
+                      
+                      onClick={handleLogout}>
+                        Logout
+                      </li>
+                    </>
+                  ) : (
+                    // If the user is not logged in, show "Login" and "Create Profile" options
+                    <>
+                      <Link
+                        to="/signin"
+                        onClick={() => {setShowDropdown(false);
+                          setOpen(false);
+                        }}
+                        className="text-white hover:text-blue-300"
+                      >
+                        <li className="md:py-2">Log In</li>
+                      </Link>
+                      <Link
+                        to="/signup"
+                        onClick={() =>{ setShowDropdown(false);
+                          setOpen(false);
+
+                        }}
+                        className="text-white hover:text-blue-300"
+                      >
+                        <li className="md:py-2">Create Profile</li>
+                      </Link>
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+        <ul className="md:flex md:space-x-4 md:py-2 text-center flex-wrap">
+          <li className="md:py-2 text-xl">
+            <Link to="/" className="px-10 py-2 font-Poppins md:px-9 md:py-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full animate-pulse">
+              Home
+            </Link>
+          </li>
+          <li className="relative mt-2  md:py-2 text-xl">
+            <button
+              onClick={() => handleProductDropdownHover(true)}
+              onMouseLeave={() => handleProductDropdownHover(false)}
+              className="px-10 py-2 mt-2 font-Poppins  bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full animate-pulse"
+            >
+              Products
+              {showProductDropdown && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute left-0 right-0 mt-3 bg-blue-400 md:bg-transparent md:w-auto"
+                >
+                  <ul className="md:flex md:space-x-4 md:py-2 text-center">
+                    <li className="md:py-2" onClick={handleDropdownOptionClick}>
+                      <Link to="/products" className="text-white hover:text-blue=-300">
+                        Cards
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </button>
+          </li>
+        </ul>
+
+          
+        </div>
      
+
+   
       )}
       
     </header>
