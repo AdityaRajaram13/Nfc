@@ -17,7 +17,7 @@ const HotDealsComponent = () => {
             Hot Deals
           </h2>
           <p className="text-gray-300 text-lg md:text-2xl text-center mb-4">
-            Who doesn’t love a sale? We’ve got you covered with limited-time offers on our NFC <br /> business cards.
+            Who doesn’t love a sale? We’ve got you covered with limited-time offers on our NFC business cards.
             Get your digital business card at a discounted price for a limited period.
           </p>
           <button className="relative font-Poppins bg-pink-700 hover:bg-pink-800 text-white font-semibold py-3 px-6 md:py-4 md:px-8 rounded-full overflow-hidden group">

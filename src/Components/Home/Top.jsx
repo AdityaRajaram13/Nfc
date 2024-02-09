@@ -12,7 +12,7 @@ function Home() {
         {/* Content on the left */}
         <div className="md:w-3/5 flex justify-center items-center">
           <div className="text-center p-10 text-white">
-            <h1 className="text-4xl md:text-7xl font-bold mb-2 font-Inter text-white">Biscard Digital visiting card NFC</h1>
+            <h1 className="text-3xl md:text-7xl font-bold mb-2 font-Inter text-white">Digital NFC Visiting Cards</h1>
             <p className="text-lg md:text-2xl mb-4 font-Poppins text-white">We made it possible for you to create your amazing profile for you or your business. Share it like you never did before.</p>
             <Link to="/signup">
   <button className="px-6 py-3 font-Poppins md:px-9 md:py-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full animate-pulse">
