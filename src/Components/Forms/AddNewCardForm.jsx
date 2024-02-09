@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
-import { createProfile } from '../../Services/ProfileService'
+import {createProfile} from '../../Services/ProfileService' 
 import { useNavigate } from 'react-router-dom';
 
 
@@ -32,7 +32,7 @@ const AddNewCardForm = () => {
     setCustomFields(updatedCustomFields);
   };
 
-
+  
   const handleTypeChange = (index, e) => {
     const updatedCustomFields = [...customFields];
     updatedCustomFields[index].type = e.target.value;
@@ -79,28 +79,32 @@ const AddNewCardForm = () => {
       }, 3000);
 
       // Optionally, you can perform some actions after successful profile creation
-
+      
       // For example, you can navigate to another page or show a success message.
       navigate('/dashboard');
 
     } catch (error) {
       console.error('Error creating profile:', error);
+
+      // Handle the error, for example, show an error message to the user.
     }
   };
 
   return (
-    <div className=" h-screen  flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
-      <div className="relative md:right-40 top-20 md:top-8 w-full rounded-xl  border-2 border-blue-950 p-4 max-w-2xl mx-auto overflow-y-auto max-h-[calc(100vh-105px)] " style={{ backgroundColor: "#111536" }} >      <style>
-        {`
+    // <div className="w-800" style={{ backgroundColor: "#111536" }}>
+    // <div className="mt-10 w-screen h-screen flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
+<div className=" h-screen  flex justify-center items-center" style={{ backgroundColor: "#0D0F23" }}>
+  <div className="relative md:right-40 top-20 md:top-8 w-full rounded-xl  border-2 border-blue-950 p-4 max-w-2xl mx-auto overflow-y-auto max-h-[calc(100vh-105px)] " style={{ backgroundColor: "#111536" }} >      <style>
+         {`
           .overflow-y-auto::-webkit-scrollbar {
           display: none;
           }
         `}
       </style>
-        <h2 className="text-lg pt-4 bg-111536 text-white  font-semibold ">Add New Card</h2>
+      <h2 className="text-lg pt-4 bg-111536 text-white  font-semibold ">Add New Card</h2>
         <hr className="my-4  border-blue-600" />
         <div className="flex flex-wrap -mx-2" >
-
+        
           <div className="w-full  px-2 mb-4"  >
             <label htmlFor="displayName" className="text-white">Display Name</label>
             <input
@@ -141,7 +145,7 @@ const AddNewCardForm = () => {
               className="w-full px-4 py-2 text-white  bg-transparent rounded-lg border border-2 border-blue-950 rounded focus:outline-none focus:border-violet-500"
             />
           </div>
-
+         
           <div className="w-full md:w-1/2 px-2 mb-4">
             <label htmlFor="phoneNumber" className="text-white">Phone Number</label>
             <input
@@ -153,7 +157,7 @@ const AddNewCardForm = () => {
             />
           </div>
           <div className="w-full  px-2 mb-4">
-            <label htmlFor="companyName" className="text-white">Company Name</label>
+          <label htmlFor="companyName" className="text-white">Company Name</label>
             <input
               type="text"
               id="companyName"
@@ -173,84 +177,84 @@ const AddNewCardForm = () => {
           </div>
         </div>
         <hr className="my-4  border-blue-600" />
-
+      
         <div className="flex mt-4 justify-between mb-4">
           <h1 className="text-lg text-white font-bold">Custom Details</h1>
           <button
-            className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
-            onClick={handleAddNew}
-          >
-            <FiPlus className="w-5 h-5" />
-
-          </button>
+  className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+  onClick={handleAddNew}
+>
+  <FiPlus className="w-5 h-5" />
+  
+</button>
         </div>
         {
-          customFields.map((field, index) => (
-            <div key={index} className="md:flex items-center mb-4">
-              <div className="flex items-center">
-                <span className="mx-2 text-white">Type:</span>
-                <select
-                  className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
-                  value={field.type}
-                  onChange={(e) => handleTypeChange(index, e)}
-                >
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">Linkedin</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">whatsapp</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">instagram</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">x (twitter)</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">Facebook</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="mobile">Mobile</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="email">Email</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="address">Address</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="website">Website</option>
-                  <option className="text-white" style={{ backgroundColor: "#111536" }} value="company">Company Name</option>
-                </select>
-              </div>
+        customFields.map((field, index) => (
+          <div key={index} className="md:flex items-center mb-4">
+            <div className="flex items-center">
+  <span className="mx-2 text-white">Type:</span>
+  <select
+    className="px-4 py-2 bg-transparent border border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+    value={field.type}
+    onChange={(e) => handleTypeChange(index, e)}
+  >
+     <option className="text-white" style={{ backgroundColor: "#111536" }}  value="Linkedin">Linkedin</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="whatsapp">whatsapp</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="instagram">instagram</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="twitter">x (twitter)</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="facebook">Facebook</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="email">Email</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="address">Address</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="website">Website</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="company">Company Name</option>
+  </select>
+</div>
 
-              <div className="flex space-y-2 md:space-y-0 items-center">
-                <label htmlFor={`text${index}`} className="text-white mx-2">
-                  Text:
-                </label>
-                <input
-                  type="text"
-                  id={`text${index}`}
-                  className="px-4 py-2 ml-1 bg-transparent  border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
-                  value={field.text}
-                  onChange={(e) => handleTextChange(index, e)}
-                />
-                <button
-                  className="px-3 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 ml-4 flex items-center"
-                  onClick={() => handleDelete(index)}
-                >
-                  <FiTrash2 className="w-5 h-5" />
-
-                </button>
-              </div>
-
+            <div className="flex space-y-2 md:space-y-0 items-center">
+              <label htmlFor={`text${index}`} className="text-white mx-2">
+                Text:
+              </label>
+              <input
+                type="text"
+                id={`text${index}`}
+                className="px-4 py-2 ml-1 bg-transparent  border-2 border-blue-950 rounded-lg focus:outline-none focus:border-violet-500 text-white "
+                value={field.text}
+                onChange={(e) => handleTextChange(index, e)}
+              />
+              <button
+              className="px-3 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 ml-4 flex items-center"
+              onClick={() => handleDelete(index)}
+            >
+              <FiTrash2 className="w-5 h-5" />
+              
+              </button>
             </div>
-          ))}
+            
+          </div>
+        ))}
         <div className=" flex justify-center py-4">
-          <button
+      <button
             type="submit"
             className="text-blue-600 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
             onClick={handleSubmit}
-          >
+           >
             Create Card
           </button>
           <button
             type="submit"
             className="text-blue-600 ml-6 hover:bg-gradient-to-b from-blue-600 to-violet-500 hover:text-white border border-blue-600 hover:border-blue-600 hover:opacity-75 px-6 py-2 rounded-full mr-2 transition-all duration-300"
-          >
-            Clear Form
+            >
+           Clear Form
           </button>
-        </div>
-        {showSuccessMessage && (
+          </div>
+          {showSuccessMessage && (
           <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg transition-opacity duration-500">
             Profile Card Created Successfully!
           </div>
         )}
       </div>
-
+      
     </div>
   );
 };
