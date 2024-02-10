@@ -6,6 +6,7 @@ import IndustrySelector from './IndustrySelector';
 import Footer from './Footer';
 
 const LandingPage = () => {
+  
   return (
     <div classname="overflow-hidden">
       <Top />

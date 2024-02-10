@@ -19,7 +19,7 @@ const UserProfile = ({ profile, onEdit }) => {
   // const [qrCodeLink, setQRCodeLink] = useState(`${import.meta.env.VITE_FRONTEND_URL}/${userID}`);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const [totalViews, setTotalViews] = useState(0);
-  const [isVisible, setIsVisible] = useState(true); // State to control component visibility
+  const [isVisible, setIsVisible] = useState(window.innerWidth >= 768); // State to control component visibility
   const[userName, setUserName]= useState();
 
 
@@ -228,11 +228,19 @@ const UserProfile = ({ profile, onEdit }) => {
       </div>
     )}
 
-    {!isModalOpen && ( // Render the buttons only when the modal is not open
+    {/* {!isModalOpen && ( // Render the buttons only when the modal is not open
       <button className="fixed md:hidden top-20 right-0 px-4 py-2 text-white rounded-full z-20" style={{ backgroundColor: '#111536' }} onClick={toggleVisibility}>
         {isVisible ? 'Hide Profile' : 'Show Profile'}
       </button>
-    )}
+    )} */}
+    <button
+  className="fixed md:hidden top-20 right-0 px-4 py-2 text-white rounded-full z-20"
+  style={{ backgroundColor: '#111536' }}
+  onClick={() => setIsVisible(!isVisible)}
+>
+  {isVisible ? 'Hide Profile' : 'Show Profile'}
+</button>
+
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { registerUser } from '../../Services/userregistration';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-
+import Footer from '../Home/Footer';
 
 // ... (import statements)
 
@@ -98,6 +98,7 @@ const SignUp = () => {
   };
 
   return (
+    <>
     <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundColor: "#0D0F23" }}>
       <div className="w-full max-w-md p-6 bg-white rounded-md shadow border border-2 border-blue-950" style={{ backgroundColor: "#111536" }}>
         <h1 className="text-3xl font-Inter text-white font-semibold text-center">Create Account</h1>
@@ -213,6 +214,8 @@ const SignUp = () => {
         </form>
       </div>
     </div>
+        <Footer/>
+        </>
   );
 };
 

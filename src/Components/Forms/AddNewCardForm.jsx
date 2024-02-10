@@ -198,7 +198,12 @@ const AddNewCardForm = () => {
     value={field.type}
     onChange={(e) => handleTypeChange(index, e)}
   >
-    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile Number</option>
+     <option className="text-white" style={{ backgroundColor: "#111536" }}  value="Linkedin">Linkedin</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="whatsapp">whatsapp</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="instagram">instagram</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="twitter">x (twitter)</option>
+   <option className="text-white" style={{ backgroundColor: "#111536" }}  value="facebook">Facebook</option>
+    <option className="text-white" style={{ backgroundColor: "#111536" }}  value="mobile">Mobile</option>
     <option className="text-white" style={{ backgroundColor: "#111536" }}  value="email">Email</option>
     <option className="text-white" style={{ backgroundColor: "#111536" }}  value="address">Address</option>
     <option className="text-white" style={{ backgroundColor: "#111536" }}  value="website">Website</option>

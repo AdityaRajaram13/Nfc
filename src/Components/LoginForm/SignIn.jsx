@@ -2,6 +2,7 @@ import React, { useContext, useState,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../../utils/auth';
 import { AuthContext } from '../../utils/authContext';
+import Footer from '../Home/Footer';
 
 const SignIn = () => {
   const { userLoggedIn, setUserLoggedIn, userType, setUserType } = useContext(AuthContext);
@@ -50,6 +51,7 @@ const SignIn = () => {
   
 
   return (
+    <>
     <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundColor: "#0D0F23" }}>
       <div className="w-full max-w-md p-6 bg-white rounded-md shadow border border-2 border-blue-950" style={{ backgroundColor: "#111536" }}>
         <h1 className="text-3xl font-Inter text-white font-semibold text-center">Sign In</h1>
@@ -98,6 +100,8 @@ const SignIn = () => {
         </form>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
