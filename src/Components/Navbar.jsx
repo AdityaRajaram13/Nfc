@@ -270,8 +270,6 @@ import Hamburger from 'hamburger-react';
 
 
 const Navbar = () => {
-  // const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
-  // const [showProductDropdown, setShowProductDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const { userLoggedIn, setUserLoggedIn } = useContext(AuthContext); // Use the userLoggedIn state from context
@@ -289,60 +287,39 @@ const Navbar = () => {
     currency: false,
   })
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setToggleDropdowns({
+          product: false,
+          profile: false,
+          currency: false,
+        });
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     console.log("here")
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setShowDropdown(!showDropdown);
-  //       setShowCurrencyDropdown(!showCurrencyDropdown);
-  //       setShowProductDropdown(!showProductDropdown);
 
-  //     }
-  //   };
 
-  //   document.addEventListener('mousedown', handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
-
-  // const toggleDropdown = () => {
-  //   setShowDropdown(!showDropdown);
-  //   console.log("click");
-  // };
 
   const handleDashboardClick = () => {
     navigate('/dashboard');
   };
 
-  // const handleProductDropdownHover = (isHovering) => {
-  //   setShowProductDropdown(isHovering || showProductDropdown);
-  // };
-
-  // const handleCurrencyDropdownHover = (isHovering) => {
-  //   setShowCurrencyDropdown(isHovering || showCurrencyDropdown);
-  // };
-
-  // const handleDropdownOptionClick = () => {
-  //   setShowDropdown(false);
-  //   setShowCurrencyDropdown(false);
-  //   setShowProductDropdown(false);
-  // };
 
   const handleLogout = async () => {
     console.log('Logging out...');
     const logoutSuccess = await logoutUser();
     if (logoutSuccess) {
       console.log('Logout successful.');
-      // After successful logout, update the userLoggedIn state
       setUserLoggedIn(false);
-      // Remove user ID and userType from local storage
       localStorage.removeItem('userID');
       localStorage.removeItem('userType');
       localStorage.removeItem('userToken');
-      // Navigate the user to the home page
       navigate('/');
     } else {
       console.log('Logout failed.');
@@ -364,16 +341,12 @@ const Navbar = () => {
           <li className="relative">
             <button
               className="font-medium"
-              // onClick={() => handleProductDropdownHover(true)}
               onClick={() => setToggleDropdowns({ ...toggleDropdowns, product: !toggleDropdowns.product })}
-            // onClick={}
-            // onMouseLeave={() => handleProductDropdownHover(false)}
             >
               Products
               {toggleDropdowns.product && (
                 <div className="absolute top-full -right-14 w-40 bg-blue-950 shadow rounded-md mt-5" ref={dropdownRef}>
                   <ul className="py-2 px-4 space-y-2">
-                    {/* <li className="text-white font-Inter cursor-pointer hover:bg-violet-900 py-1 px-2 rounded-md" onClick={handleDropdownOptionClick}> */}
                     <li className="text-white font-Inter cursor-pointer hover:bg-violet-900 py-1 px-2 rounded-md">
                       <Link to="/products" className="block">
                         Cards
@@ -425,7 +398,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
       <div className="md:hidden flex justify-end right-0 py-2" >
         <div className='flex w-full justify-start item-center text-2xl text-white'>
           <p>Logo</p>
@@ -446,7 +418,6 @@ const Navbar = () => {
               <li className="relative mt-2  text-xl">
                 <div
                   onClick={() => setToggleMobileDropdowns({ ...toggleMobileDropdowns, profile: !toggleMobileDropdowns.profile })}
-                  // onClick={}
                   className="px-10 py-2 font-Poppins md:px-9 md:py-4  hover:bg-pink-600 text-white font-bold"
                 >
                   Profile
@@ -511,7 +482,6 @@ const Navbar = () => {
 
               <li className="relative mt-2  md:py-2 text-xl">
                 <button
-                  // onClick={() => handleProductDropdownHover(true)}
                   onClick={() => setToggleMobileDropdowns({ ...toggleMobileDropdowns, product: !toggleMobileDropdowns.product })}
                   onMouseLeave={() => handleProductDropdownHover(false)}
                   className="px-10 py-2 font-Poppins md:px-9 md:py-4  hover:bg-pink-600 text-white font-bold"
@@ -523,7 +493,6 @@ const Navbar = () => {
                       className="absolute left-0 right-0 mt-3 bg-blue-400 "
                     >
                       <ul className="  text-center">
-                        {/* <li onClick={handleDropdownOptionClick}> */}
                         <li>
                           <Link to="/products" className="text-white font-Poppins hover:text-blue=-300">
                             Cards
@@ -537,9 +506,6 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-
-
-
         )}
 
     </header>
