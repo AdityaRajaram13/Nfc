@@ -333,8 +333,8 @@ const Navbar = () => {
   return (
     <header className="h-16 w-full  items-center relative z-50 justify-end px-5  border-b-2 border-blue-600" style={{ backgroundColor: "#111536" }}>
       <div className="h-16 hidden md:flex w-full  items-center relative z-50 justify-end px-5 space-x-10 border-b-2" style={{ backgroundColor: "#111536" }}>
-        <div className='flex w-full justify-start  text-2xl text-white'>
-          <p>Logo</p>
+        <div className='flex w-full justify-start  text-5xl font-Poppins font-bold text-white'>
+          <p>Biscard</p>
         </div>
         <ul className="flex space-x-4 text-white">
           <li className="font-medium"> <Link to="/">Home</Link></li>
@@ -399,8 +399,8 @@ const Navbar = () => {
         </div>
       </div>
       <div className="md:hidden flex justify-end right-0 py-2" >
-        <div className='flex w-full justify-start item-center text-2xl text-white'>
-          <p>Logo</p>
+        <div className='flex w-full justify-start item-center   text-4xl font-Poppins font-bold text-white'>
+          <p>Biscard</p>
         </div>
         <Hamburger
           toggled={isOpen}
@@ -413,9 +413,12 @@ const Navbar = () => {
       {
         isOpen && (
           <div className="fixed md:hidden  inset-0 w-[60%]  bg-pink-300 border-r shadow-xl transition duration-300">
-
+            <div className='flex w-full justify-end item-center px-4 mt-4   text-4xl font-Poppins font-bold text-white'>
+              <p>Biscard</p>
+            </div>
             <ul className="flex-col ml-2  mt-20 text-center flex-wrap">
               <li className="relative mt-2  text-xl">
+
                 <div
                   onClick={() => setToggleMobileDropdowns({ ...toggleMobileDropdowns, profile: !toggleMobileDropdowns.profile })}
                   className="px-10 py-2 font-Poppins md:px-9 md:py-4  hover:bg-pink-600 text-white font-bold"
