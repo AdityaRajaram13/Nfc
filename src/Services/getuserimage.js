@@ -5,7 +5,7 @@ const BASE_URL = 'https://webapi.biscard.in'; // Replace with your actual server
 
 export async function getUserImageURL(userID) {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/userimage/${userID}`,{
+    const response = await fetch(`http://localhost:3000/api/userimage/${userID}`,{
       method: 'GET',
       credentials: 'include',
       headers: {

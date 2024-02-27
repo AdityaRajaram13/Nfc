@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
         setUserLoggedIn(isAuthenticatedUser);
 
         if (isAuthenticatedUser) {
-          const response = await fetch(`https://webapi.biscard.in/api/check-auth`, {
+          const response = await fetch(`http://localhost:3000/api/check-auth`, {
             method: 'GET',
             credentials: 'include',
           });

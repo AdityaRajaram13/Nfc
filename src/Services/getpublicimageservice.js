@@ -7,7 +7,7 @@ const BASE_URL = 'https://webapi.biscard.in';// Replace with your actual server 
 
 export async function getUserImageURL(userID) {
   try {
-    const response = await fetch(`https://webapi.biscard.in/public/user/${userID}`);
+    const response = await fetch(`http://localhost:3000/public/user/${userID}`);
     
     if (!response.ok) {
       throw new Error('Error fetching user image URL');

@@ -2,7 +2,7 @@ const backendURL = 'https://webapi.biscard.in';// Update with your backend URL
 
 export const createCompanyUser = async (CompanyAdminID, userData) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/cpm/CompanyAdmin/create`, {
+    const response = await fetch(`http://localhost:3000/api/cpm/CompanyAdmin/create`, {
       method: 'POST',
       credentials: 'include', // Include cookies if your authentication relies on cookies
       headers: {

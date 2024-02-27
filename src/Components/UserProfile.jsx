@@ -41,7 +41,7 @@ const UserProfile = ({ profile, onEdit }) => {
   };
 
   const storedUserID = localStorage.getItem('userID');
-  const qrCodeLink = storedUserID ? `https://www.biscard.in/${storedUserID}` : '';
+  const qrCodeLink = storedUserID ? `http://localhost:5174/${storedUserID}` : '';
 
   const handleUploadPicture = (event) => {
     const file = event.target.files[0];
@@ -55,7 +55,7 @@ const UserProfile = ({ profile, onEdit }) => {
         formData.append('userimage', file);
   
         const userID = localStorage.getItem('userID');
-        fetch(`https://webapi.biscard.in/api/update/${userID}`, {
+        fetch(`http://localhost:3000/api/update/${userID}`, {
           method: 'PUT',
           credentials: 'include',
           body: formData,
@@ -80,7 +80,7 @@ const UserProfile = ({ profile, onEdit }) => {
     // Delete the image on the server
     const userID = localStorage.getItem('userID');
 
-    fetch(`https://webapi.biscard.in/api/update/${userID}`, {
+    fetch(`http://localhost:3000/api/update/${userID}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -227,12 +227,6 @@ const UserProfile = ({ profile, onEdit }) => {
         )}
       </div>
     )}
-
-    {/* {!isModalOpen && ( // Render the buttons only when the modal is not open
-      <button className="fixed md:hidden top-20 right-0 px-4 py-2 text-white rounded-full z-20" style={{ backgroundColor: '#111536' }} onClick={toggleVisibility}>
-        {isVisible ? 'Hide Profile' : 'Show Profile'}
-      </button>
-    )} */}
     <button
   className="fixed md:hidden top-20 right-0 px-4 py-2 text-white rounded-full z-20"
   style={{ backgroundColor: '#111536' }}

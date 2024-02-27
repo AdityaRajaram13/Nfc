@@ -2,7 +2,7 @@ const backendURL = 'https://webapi.biscard.in'; // Update with your backend URL
 
 export const getCompanyAdminUsers = async () => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/getcompanyadminuser`, {
+    const response = await fetch(`http://localhost:3000/api/getcompanyadminuser`, {
       method: 'GET',
       credentials: 'include', // Include cookies if your authentication relies on cookies
       headers: {

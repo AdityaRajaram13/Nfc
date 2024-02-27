@@ -2,7 +2,7 @@ const backendURL = 'https://webapi.biscard.in'; // Update with your backend URL
 
 export const updateCompanyUser = async (CompanyAdminID, UserID, updatedUserData) => {
   try {
-    const response = await fetch(`https://webapi.biscard.in/api/cpm/CompanyAdmin/${CompanyAdminID}/users/${UserID}/update`, {
+    const response = await fetch(`http://localhost:3000/api/cpm/CompanyAdmin/${CompanyAdminID}/users/${UserID}/update`, {
       method: 'PUT',
       credentials: 'include', // Include cookies if your authentication relies on cookies
       headers: {
